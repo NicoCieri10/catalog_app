@@ -1,4 +1,6 @@
+import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_validation/home/home.dart';
 import 'package:form_validation/l10n/l10n.dart';
@@ -6,7 +8,25 @@ import 'package:form_validation/login/login.dart';
 import 'package:go_router/go_router.dart';
 
 class App extends StatelessWidget {
-  App({super.key});
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      ),
+    );
+    return AppSize.child(
+      child: MyApp(),
+    );
+  }
+}
+
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +38,18 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      title: 'Productos App',
     );
   }
 
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: '/',
+        path: '/home',
         name: 'home',
         builder: (context, state) => const HomePage(),
       ),
       GoRoute(
-        path: '/login',
+        path: '/',
         name: 'login',
         builder: (context, state) => const LoginPage(),
       ),
