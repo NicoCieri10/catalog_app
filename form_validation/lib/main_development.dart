@@ -9,5 +9,5 @@ import 'package:form_validation/app/app.dart';
 import 'package:form_validation/bootstrap.dart';
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap(App.new);
 }
