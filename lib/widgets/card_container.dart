@@ -21,14 +21,15 @@ class CardContainer extends StatelessWidget {
 
   BoxDecoration _cardShape() {
     return BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(25.sp),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 15.sp,
-            offset: const Offset(0, 5),
-          )
-        ]);
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(25.sp),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black12,
+          blurRadius: 15.sp,
+          offset: const Offset(0, 5),
+        )
+      ],
+    );
   }
 }

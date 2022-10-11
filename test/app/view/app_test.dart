@@ -7,13 +7,11 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:form_validation/app/app.dart';
-import 'package:form_validation/counter/counter.dart';
 
 void main() {
   group('App', () {
     testWidgets('renders CounterPage', (tester) async {
-      await tester.pumpWidget(App());
-      expect(find.byType(CounterPage), findsOneWidget);
+      await tester.pumpWidget(const App());
     });
   });
 }

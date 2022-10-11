@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline4,
                     ),
                     SizedBox(height: 30.sp),
-                    _LoginForm(),
+                    const _LoginForm(),
                   ],
                 ),
               ),
@@ -35,6 +35,7 @@ class LoginPage extends StatelessWidget {
               const Text(
                 'Crear una nueva cuenta',
               ),
+              SizedBox(height: 50.sp),
             ],
           ),
         ),
@@ -44,7 +45,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class _LoginForm extends StatelessWidget {
-  const _LoginForm({super.key});
+  const _LoginForm();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,44 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(),
+              decoration: InputDecorations.authInputDecoration(
+                hintText: 'john.doe@gmail.com',
+                labelText: 'Email',
+                prefixIcon: Icons.alternate_email_rounded,
+              ),
+            ),
+            SizedBox(height: 30.sp),
+            TextFormField(
+              obscureText: true,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecorations.authInputDecoration(
+                hintText: '******',
+                labelText: 'Password',
+                prefixIcon: Icons.lock_outline,
+              ),
+            ),
+            SizedBox(height: 30.sp),
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              disabledColor: Colors.grey,
+              elevation: 0,
+              color: Colors.purple,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 80.sp,
+                  vertical: 15.sp,
+                ),
+                child: const Text(
+                  'Ingresar',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              onPressed: () {},
             ),
           ],
         ),
