@@ -2,17 +2,30 @@ import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 
 class AuthBackground extends StatelessWidget {
-  const AuthBackground({super.key});
+  const AuthBackground({super.key, required this.child});
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      height: double.infinity,
-      width: double.infinity,
+    return SizedBox.expand(
+      // height: double.infinity,
+      // width: double.infinity,
       child: Stack(
         children: [
-          _PurpleBox(),
+          const _PurpleBox(),
+          SafeArea(
+            child: Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 30.sp),
+              child: Icon(
+                Icons.person_pin,
+                color: Colors.white,
+                size: 100.sp,
+              ),
+            ),
+          ),
+          child,
         ],
       ),
     );
