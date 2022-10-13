@@ -56,73 +56,68 @@ class _LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginForm = BlocProvider.of<LoginCubit>(context);
 
-    return Container(
-      child: Form(
-        key: loginForm.formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(
-          children: [
-            TextFormField(
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                hintText: 'john.doe@gmail.com',
-                labelText: 'Email',
-                prefixIcon: Icons.alternate_email_rounded,
-              ),
-              validator: (value) {
-                const pattern =
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                final regExp = RegExp(pattern);
+    return Form(
+      key: loginForm.formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Column(
+        children: [
+          TextFormField(
+            autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecorations.authInputDecoration(
+              hintText: 'john.doe@gmail.com',
+              labelText: 'Email',
+              prefixIcon: Icons.alternate_email_rounded,
+            ),
+            validator: (value) {
+              const pattern =
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+              final regExp = RegExp(pattern);
 
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'Ingrese un correo válido';
-              },
+              return regExp.hasMatch(value ?? '')
+                  ? null
+                  : 'Ingrese un correo válido';
+            },
+          ),
+          SizedBox(height: 30.sp),
+          TextFormField(
+            obscureText: true,
+            autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecorations.authInputDecoration(
+              hintText: '******',
+              labelText: 'Password',
+              prefixIcon: Icons.lock_outline,
             ),
-            SizedBox(height: 30.sp),
-            TextFormField(
-              obscureText: true,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                hintText: '******',
-                labelText: 'Password',
-                prefixIcon: Icons.lock_outline,
-              ),
-              validator: (value) {
-                return (value != null && value.length >= 6)
-                    ? null
-                    : 'Ingrese una contraseña válida (min. 6 caracteres)';
-              },
+            validator: (value) {
+              return (value != null && value.length >= 6)
+                  ? null
+                  : 'Ingrese una contraseña válida (min. 6 caracteres)';
+            },
+          ),
+          SizedBox(height: 30.sp),
+          MaterialButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            SizedBox(height: 30.sp),
-            MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+            disabledColor: Colors.grey,
+            elevation: 0,
+            color: Colors.deepPurple,
+            onPressed: loginForm.isValidForm,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 80.sp,
+                vertical: 15.sp,
               ),
-              disabledColor: Colors.grey,
-              elevation: 0,
-              color: Colors.deepPurple,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 80.sp,
-                  vertical: 15.sp,
+              child: const Text(
+                'Ingresar',
+                style: TextStyle(
+                  color: Colors.white,
                 ),
-                child: const Text(
-                  'Ingresar',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
               ),
-              onPressed: () {
-                // ToDo: arreglar el isValidForm
-                loginForm.isValidForm();
-              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
