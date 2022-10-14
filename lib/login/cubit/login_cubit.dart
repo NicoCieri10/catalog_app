@@ -13,12 +13,26 @@ class LoginCubit extends Cubit<LoginState> {
   String password = '';
 
   bool isValidForm() {
-    print('$email - $password');
-    return formKey.currentState?.validate() != null;
+    return formKey.currentState?.validate() ?? false;
   }
 
-  // TODO: complete cubit
-  void addEmail(String newEmail) {}
+  final status = LoginStatus;
 
-  void addPassword(String newPassword) {}
+  void addEmail(String newEmail) {
+    emit(
+      state.copyWith(
+        status: LoginStatus.success,
+        email: newEmail,
+      ),
+    );
+  }
+
+  void addPassword(String newPassword) {
+    emit(
+      state.copyWith(
+        status: LoginStatus.success,
+        password: newPassword,
+      ),
+    );
+  }
 }

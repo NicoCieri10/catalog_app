@@ -1,9 +1,11 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_validation/home/home.dart';
 import 'package:form_validation/login/cubit/login_cubit.dart';
 import 'package:form_validation/ui/ui.dart';
 import 'package:form_validation/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -105,7 +107,11 @@ class _LoginForm extends StatelessWidget {
             disabledColor: Colors.grey,
             elevation: 0,
             color: Colors.deepPurple,
-            onPressed: loginForm.isValidForm,
+            onPressed: () {
+              if (!loginForm.isValidForm()) return;
+
+              context.replaceNamed(HomePage.name);
+            },
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 80.sp,
