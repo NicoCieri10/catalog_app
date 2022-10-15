@@ -61,71 +61,89 @@ class _LoginForm extends StatelessWidget {
     return Form(
       key: loginForm.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        children: [
-          TextFormField(
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecorations.authInputDecoration(
-              hintText: 'john.doe@gmail.com',
-              labelText: 'Email',
-              prefixIcon: Icons.alternate_email_rounded,
-            ),
-            onChanged: loginForm.addEmail,
-            validator: (value) {
-              const pattern =
-                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-              final regExp = RegExp(pattern);
+      child: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              TextFormField(
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecorations.authInputDecoration(
+                  hintText: 'john.doe@gmail.com',
+                  labelText: 'Email',
+                  prefixIcon: Icons.alternate_email_rounded,
+                ),
+                onChanged: loginForm.addEmail,
+                validator: (value) {
+                  const pattern =
+                      r'^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                  final regExp = RegExp(pattern);
 
-              return regExp.hasMatch(value ?? '')
-                  ? null
-                  : 'Ingrese un correo válido';
-            },
-          ),
-          SizedBox(height: 30.sp),
-          TextFormField(
-            obscureText: true,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecorations.authInputDecoration(
-              hintText: '******',
-              labelText: 'Password',
-              prefixIcon: Icons.lock_outline,
-            ),
-            onChanged: loginForm.addPassword,
-            validator: (value) {
-              return (value != null && value.length >= 6)
-                  ? null
-                  : 'Ingrese una contraseña válida (min. 6 caracteres)';
-            },
-          ),
-          SizedBox(height: 30.sp),
-          MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            disabledColor: Colors.grey,
-            elevation: 0,
-            color: Colors.deepPurple,
-            onPressed: () {
-              if (!loginForm.isValidForm()) return;
-
-              context.replaceNamed(HomePage.name);
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 80.sp,
-                vertical: 15.sp,
+                  return regExp.hasMatch(value ?? '')
+                      ? null
+                      : 'Ingrese un correo válido';
+                },
               ),
-              child: const Text(
-                'Ingresar',
-                style: TextStyle(
-                  color: Colors.white,
+              SizedBox(height: 30.sp),
+              TextFormField(
+                obscureText: true,
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecorations.authInputDecoration(
+                  hintText: '******',
+                  labelText: 'Password',
+                  prefixIcon: Icons.lock_outline,
+                ),
+                onChanged: loginForm.addPassword,
+                validator: (value) {
+                  return (value != null && value.length >= 6)
+                      ? null
+                      : 'Ingrese una contraseña válida (min. 6 caracteres)';
+                },
+              ),
+              SizedBox(height: 30.sp),
+              MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                disabledColor: Colors.grey,
+                elevation: 0,
+                color: Colors.deepPurple,
+                onPressed: state.status == LoginStatus.attempting
+                    ? null
+                    : () async {
+                        FocusScope.of(context).unfocus();
+
+                        if (!loginForm.isValidForm()) return;
+
+                        const LoginState(status: LoginStatus.attempting);
+
+                        await Future<void>.delayed(
+                          const Duration(seconds: 2),
+                        );
+
+                        const LoginState(status: LoginStatus.success);
+
+                        context.replaceNamed(HomePage.name);
+                      },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 80.sp,
+                    vertical: 15.sp,
+                  ),
+                  child: Text(
+                    state.status == LoginStatus.attempting
+                        ? 'Espere'
+                        : 'Ingresar',
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
