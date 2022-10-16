@@ -118,16 +118,14 @@ class _LoginForm extends StatelessWidget {
                         if (!loginForm.isValidForm()) return;
                         // nico@gmail.com
 
-                        const LoginState(status: LoginStatus.attempting);
+                        loginForm.changeState(LoginStatus.attempting);
 
                         await Future<void>.delayed(
                           const Duration(seconds: 2),
                         );
 
-                        if (state.status == LoginStatus.attempting) {
-                          const LoginState(status: LoginStatus.success);
-                          context.replaceNamed(HomePage.name);
-                        }
+                        loginForm.changeState(LoginStatus.success);
+                        context.replaceNamed(HomePage.name);
                       },
                 child: const ButtonText(),
               ),

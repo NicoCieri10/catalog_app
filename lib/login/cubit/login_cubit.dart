@@ -35,4 +35,12 @@ class LoginCubit extends Cubit<LoginState> {
       ),
     );
   }
+
+  void changeState(LoginStatus status) {
+    emit(
+      state.copyWith(
+        status: status,
+      ),
+    );
+  }
 }
