@@ -57,6 +57,7 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginForm = BlocProvider.of<LoginCubit>(context);
+    var text = '';
 
     return Form(
       key: loginForm.formKey,
@@ -115,6 +116,7 @@ class _LoginForm extends StatelessWidget {
                         FocusScope.of(context).unfocus();
 
                         if (!loginForm.isValidForm()) return;
+                        // nico@gmail.com
 
                         const LoginState(status: LoginStatus.attempting);
 
@@ -122,26 +124,38 @@ class _LoginForm extends StatelessWidget {
                           const Duration(seconds: 2),
                         );
 
-                        const LoginState(status: LoginStatus.success);
-
-                        context.replaceNamed(HomePage.name);
+                        if (state.status == LoginStatus.attempting) {
+                          const LoginState(status: LoginStatus.success);
+                          context.replaceNamed(HomePage.name);
+                        }
                       },
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 80.sp,
-                    vertical: 15.sp,
-                  ),
-                  child: Text(
-                    state.status == LoginStatus.attempting
-                        ? 'Espere'
-                        : 'Ingresar',
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                child: const ButtonText(),
               ),
             ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ButtonText extends StatelessWidget {
+  const ButtonText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 80.sp,
+        vertical: 15.sp,
+      ),
+      child: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          return Text(
+            state.status == LoginStatus.attempting ? 'Esperar' : 'Ingresar',
+            style: const TextStyle(
+              color: Colors.white,
+            ),
           );
         },
       ),
