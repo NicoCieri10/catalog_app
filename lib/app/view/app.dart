@@ -39,7 +39,15 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.grey[300],
+        scaffoldBackgroundColor: Colors.grey[500],
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          color: Colors.black87,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          elevation: 0,
+          backgroundColor: Colors.black87,
+        ),
       ),
     );
   }
@@ -47,12 +55,12 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: '/home',
+        path: '/',
         name: 'home',
         builder: (context, state) => const HomePage(),
       ),
       GoRoute(
-        path: '/',
+        path: '/login',
         name: 'login',
         builder: (context, state) => const LoginPage(),
       ),
