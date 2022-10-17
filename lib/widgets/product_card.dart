@@ -17,8 +17,10 @@ class ProductCard extends StatelessWidget {
         height: 400.sp,
         decoration: _cardBorders(),
         child: Stack(
+          alignment: Alignment.bottomLeft,
           children: const [
             _BackgroundImage(),
+            _ProductsDetails(),
           ],
         ),
       ),
@@ -31,6 +33,7 @@ class ProductCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(25.sp),
       boxShadow: const [
         BoxShadow(
+          color: Colors.black45,
           offset: Offset(0, 5),
           blurRadius: 10,
         )
@@ -39,19 +42,34 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-class _BackgroundImage extends StatelessWidget {
-  const _BackgroundImage({
-    super.key,
-  });
+class _ProductsDetails extends StatelessWidget {
+  const _ProductsDetails();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: 400.sp,
-      child: const FadeInImage(
-        placeholder: AssetImage('assets/jar-loading.gif'),
-        image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
+      height: 70,
+      color: Colors.blueGrey,
+    );
+  }
+}
+
+class _BackgroundImage extends StatelessWidget {
+  const _BackgroundImage();
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25.sp),
+      child: SizedBox(
+        width: double.infinity,
+        height: 400.sp,
+        child: const FadeInImage(
+          placeholder: AssetImage('assets/jar-loading.gif'),
+          image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
