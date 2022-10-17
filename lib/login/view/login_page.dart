@@ -14,6 +14,20 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginCubit(),
+      child: const LoginView(),
+    );
+  }
+}
+
+class LoginView extends StatelessWidget {
+  const LoginView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: AuthBackground(
         child: SingleChildScrollView(
@@ -31,10 +45,7 @@ class LoginPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline4,
                     ),
                     SizedBox(height: 30.sp),
-                    BlocProvider(
-                      create: (_) => LoginCubit(),
-                      child: const _LoginForm(),
-                    ),
+                    const _LoginForm(),
                   ],
                 ),
               ),
@@ -57,12 +68,12 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginForm = BlocProvider.of<LoginCubit>(context);
-    var text = '';
 
     return Form(
       key: loginForm.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: BlocBuilder<LoginCubit, LoginState>(
+      child: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {},
         builder: (context, state) {
           return Column(
             children: [
@@ -104,6 +115,8 @@ class _LoginForm extends StatelessWidget {
               ),
               SizedBox(height: 30.sp),
               MaterialButton(
+                minWidth: 200.sp,
+                height: 45.sp,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -127,7 +140,14 @@ class _LoginForm extends StatelessWidget {
                         loginForm.changeState(LoginStatus.success);
                         context.replaceNamed(HomePage.name);
                       },
-                child: const ButtonText(),
+                child: Text(
+                  state.status == LoginStatus.attempting
+                      ? 'Espere...'
+                      : 'Ingresar',
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           );
@@ -137,26 +157,26 @@ class _LoginForm extends StatelessWidget {
   }
 }
 
-class ButtonText extends StatelessWidget {
-  const ButtonText({super.key});
+// class ButtonText extends StatelessWidget {
+//   const ButtonText({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 80.sp,
-        vertical: 15.sp,
-      ),
-      child: BlocBuilder<LoginCubit, LoginState>(
-        builder: (context, state) {
-          return Text(
-            state.status == LoginStatus.attempting ? 'Esperar' : 'Ingresar',
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.symmetric(
+//         horizontal: 80.sp,
+//         vertical: 15.sp,
+//       ),
+//       child: BlocBuilder<LoginCubit, LoginState>(
+//         builder: (context, state) {
+//           return Text(
+//             state.status == LoginStatus.attempting ? 'Esperar' : 'Ingresar',
+//             style: const TextStyle(
+//               color: Colors.white,
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
