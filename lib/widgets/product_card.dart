@@ -21,6 +21,16 @@ class ProductCard extends StatelessWidget {
           children: const [
             _BackgroundImage(),
             _ProductsDetails(),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: _PriceTag(),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              child: _NotAvailable(),
+            ),
           ],
         ),
       ),
@@ -29,15 +39,82 @@ class ProductCard extends StatelessWidget {
 
   BoxDecoration _cardBorders() {
     return BoxDecoration(
-      color: Colors.brown[900],
       borderRadius: BorderRadius.circular(25.sp),
       boxShadow: const [
         BoxShadow(
           color: Colors.black45,
           offset: Offset(0, 5),
           blurRadius: 10,
-        )
+        ),
       ],
+    );
+  }
+}
+
+class _NotAvailable extends StatelessWidget {
+  const _NotAvailable();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.sp,
+      height: 60.sp,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(25.sp),
+          topLeft: Radius.circular(25.sp),
+        ),
+      ),
+      child: FittedBox(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.sp,
+          ),
+          child: Text(
+            'N/A',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.sp,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PriceTag extends StatelessWidget {
+  const _PriceTag();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.sp,
+      height: 60.sp,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.blueGrey,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(25.sp),
+          bottomLeft: Radius.circular(25.sp),
+        ),
+      ),
+      child: FittedBox(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.sp,
+          ),
+          child: Text(
+            r'$111.11',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.sp,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -47,12 +124,49 @@ class _ProductsDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 70,
-      color: Colors.blueGrey,
+    return Padding(
+      padding: EdgeInsets.only(right: 50.sp),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.sp,
+          vertical: 10.sp,
+        ),
+        width: double.infinity,
+        height: 70,
+        decoration: _buildBoxDecoration(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Product',
+              style: TextStyle(
+                fontSize: 20.sp,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              'ProductID',
+              style: TextStyle(
+                fontSize: 15.sp,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
+
+  BoxDecoration _buildBoxDecoration() => BoxDecoration(
+        color: Colors.blueGrey,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(25.sp),
+          topRight: Radius.circular(25.sp),
+        ),
+      );
 }
 
 class _BackgroundImage extends StatelessWidget {

@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_validation/home/home.dart';
 import 'package:form_validation/l10n/l10n.dart';
 import 'package:form_validation/login/login.dart';
+import 'package:form_validation/product/product_page.dart';
 import 'package:go_router/go_router.dart';
 
 class App extends StatelessWidget {
@@ -63,6 +64,11 @@ class MyApp extends StatelessWidget {
         path: '/login',
         name: 'login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/product',
+        name: 'product',
+        builder: (context, state) => const ProductPage(),
       ),
     ],
   );
