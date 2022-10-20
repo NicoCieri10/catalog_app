@@ -1,6 +1,7 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_validation/home/home.dart';
 import 'package:form_validation/l10n/l10n.dart';
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
         statusBarColor: Colors.transparent,
       ),
     );
+
     return AppSize.child(
       child: MyApp(),
     );

@@ -6,7 +6,6 @@
 // https://opensource.org/licenses/MIT.
 
 /// A Very Good Project created by Very Good CLI.
-library product_client;
+library product_repository;
 
-export 'src/models/models.dart';
-export 'src/product_client.dart';
+export 'src/product_repository.dart';

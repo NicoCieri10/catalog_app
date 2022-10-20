@@ -5,8 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+/// {@template product_repository}
 /// A Very Good Project created by Very Good CLI.
-library product_client;
-
-export 'src/models/models.dart';
-export 'src/product_client.dart';
+/// {@endtemplate}
+class ProductRepository {
+  /// {@macro product_repository}
+  const ProductRepository();
+}
