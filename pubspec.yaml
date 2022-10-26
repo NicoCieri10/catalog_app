@@ -17,6 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   go_router: ^5.0.5
+  http: ^0.13.5
   intl: ^0.17.0
   product_client:
     path: package/product_client

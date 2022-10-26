@@ -8,6 +8,7 @@ import 'package:form_validation/l10n/l10n.dart';
 import 'package:form_validation/login/login.dart';
 import 'package:form_validation/product/product_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
 class App extends StatelessWidget {
@@ -25,7 +26,7 @@ class App extends StatelessWidget {
 
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider.value(value: const ProductRepository()),
+        RepositoryProvider.value(value: ProductClient()),
       ],
       child: AppSize.child(
         child: MyApp(),

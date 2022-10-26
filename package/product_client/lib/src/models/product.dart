@@ -2,6 +2,8 @@
 //
 //     final product = productFromMap(jsonString);
 
+import 'dart:convert';
+
 /// {@template product}
 /// A class that represents a product.
 /// {@endtemplate}
@@ -12,10 +14,11 @@ class Product {
     required this.name,
     this.picture,
     required this.price,
+    this.id,
   });
 
   /// Returns a new [Product] with the given [Map<String, dynamic>].
-  factory Product.fromJson(Map<String, dynamic> json) {
+  factory Product.fromMap(Map<String, dynamic> json) {
     return Product(
       available: json['available'] as bool,
       name: json['name'] as String,
@@ -23,6 +26,22 @@ class Product {
       price: (json['price'] as num).toDouble(),
     );
   }
+
+  ///
+  factory Product.fromJson(String str) {
+    return Product.fromMap(json.decode(str) as Map<String, dynamic>);
+  }
+
+  ///
+  String toJson() => json.encode(toMap());
+
+  /// converts a Json into a map
+  Map<String, dynamic> toMap() => {
+        'available': available,
+        'name': name,
+        'picture': picture,
+        'price': price,
+      };
 
   /// Availability of the product.
   final bool available;
@@ -35,4 +54,7 @@ class Product {
 
   /// Price of the product.
   final num price;
+
+  /// ID of the product.
+  String? id;
 }
