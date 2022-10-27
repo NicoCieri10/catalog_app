@@ -16,6 +16,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productClient = ProductClient();
+
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
         systemNavigationBarColor: Colors.transparent,
@@ -26,7 +28,7 @@ class App extends StatelessWidget {
 
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider.value(value: ProductClient()),
+        RepositoryProvider.value(value: ProductRepository(productClient)),
       ],
       child: AppSize.child(
         child: MyApp(),

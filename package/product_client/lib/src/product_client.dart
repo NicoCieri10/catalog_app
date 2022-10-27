@@ -12,7 +12,7 @@ class ProductClient {
   }
 
   /// The client used to make requests.
-  // final _client = http.Client();
+  final _client = http.Client();
 
   static const _baseUrl =
       'flutter-catalog-app-9a394-default-rtdb.firebaseio.com';
@@ -24,9 +24,9 @@ class ProductClient {
   bool isLoading = true;
 
   /// A method to make the request to the Database.
-  Future loadProducts() async {
+  Future<List<Product>> loadProducts() async {
     final url = Uri.https(_baseUrl, 'products.json');
-    final resp = await http.get(url);
+    final resp = await _client.get(url);
 
     final productsMap = jsonDecode(resp.body) as Map<String, dynamic>
       ..forEach((key, value) {
@@ -35,6 +35,28 @@ class ProductClient {
         products.add(tempProduct);
       });
 
-    print(products[1].name);
+    try {
+      return products;
+    } catch (e) {
+      throw const SpecifiedTypeNotMatchedException();
+    }
   }
+}
+
+/// {@template specified_type_not_matched_exception}
+/// Thrown if an http response doesn't match the expected type.
+/// {@endtemplate}
+class SpecifiedTypeNotMatchedException implements Exception {
+  /// {@macro specified_type_not_matched_exception}
+  const SpecifiedTypeNotMatchedException();
+}
+
+/// An extension to add an `isSuccess` and `isFailure` property
+/// to the [http.Response] class.
+extension Result on http.Response {
+  /// Returns true if the response is a success.
+  bool get isSuccess => statusCode >= 200 && statusCode < 300;
+
+  /// Returns true if the response is a failure.
+  bool get isFailure => !isSuccess;
 }
