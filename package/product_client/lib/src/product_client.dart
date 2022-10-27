@@ -21,6 +21,7 @@ class ProductClient {
   final List<Product> products = [];
 
   //ToDo implementar cubit/TryCatch
+
   bool isLoading = true;
 
   /// A method to make the request to the Database.
