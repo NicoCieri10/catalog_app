@@ -31,11 +31,7 @@ class HomeCubit extends Cubit<HomeState> {
           products: newProducts,
         ),
       );
-    } catch (error) {
-      emit(
-        state.copyWith(status: HomeStatus.failure),
-      );
-    }
+    } catch (error) {}
   }
 
   void changeState(HomeStatus status) {

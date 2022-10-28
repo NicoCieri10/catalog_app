@@ -28,6 +28,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<HomeCubit>(context).loadProducts();
+
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -40,10 +42,10 @@ class HomeView extends StatelessWidget {
             title: const Text('Productos'),
           ),
           body: ListView.builder(
-            itemCount: 10,
+            itemCount: products.length,
             itemBuilder: (BuildContext context, int index) => GestureDetector(
               onTap: () => context.pushNamed(ProductPage.name),
-              child: const ProductCard(),
+              child: ProductCard(product: products[index]),
             ),
           ),
           floatingActionButton: FloatingActionButton(

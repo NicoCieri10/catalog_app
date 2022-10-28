@@ -5,9 +5,14 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('LoadingPage'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('LoadingPage'),
+      ),
+      body: const Center(
+        child: CircularProgressIndicator(
+          color: Colors.amber,
+        ),
       ),
     );
   }

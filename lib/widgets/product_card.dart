@@ -1,8 +1,14 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:product_client/product_client.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  const ProductCard({
+    super.key,
+    required this.product,
+  });
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +24,20 @@ class ProductCard extends StatelessWidget {
         decoration: _cardBorders(),
         child: Stack(
           alignment: Alignment.bottomLeft,
-          children: const [
-            _BackgroundImage(),
-            _ProductsDetails(),
+          children: [
+            _BackgroundImage(product),
+            _ProductsDetails(product),
             Positioned(
               top: 0,
               right: 0,
-              child: _PriceTag(),
+              child: _PriceTag(product),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              child: _NotAvailable(),
-            ),
+            if (!product.available)
+              Positioned(
+                top: 0,
+                left: 0,
+                child: _NotAvailable(product),
+              ),
           ],
         ),
       ),
@@ -52,7 +59,9 @@ class ProductCard extends StatelessWidget {
 }
 
 class _NotAvailable extends StatelessWidget {
-  const _NotAvailable();
+  const _NotAvailable(this.product);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +95,9 @@ class _NotAvailable extends StatelessWidget {
 }
 
 class _PriceTag extends StatelessWidget {
-  const _PriceTag();
+  const _PriceTag(this.product);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +118,7 @@ class _PriceTag extends StatelessWidget {
             horizontal: 10.sp,
           ),
           child: Text(
-            r'$111.11',
+            '\$${product.price}',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.sp,
@@ -120,7 +131,9 @@ class _PriceTag extends StatelessWidget {
 }
 
 class _ProductsDetails extends StatelessWidget {
-  const _ProductsDetails();
+  const _ProductsDetails(this.product);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +151,7 @@ class _ProductsDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Product',
+              product.name,
               style: TextStyle(
                 fontSize: 20.sp,
                 color: Colors.white,
@@ -148,7 +161,7 @@ class _ProductsDetails extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'ProductID',
+              product.id ?? '',
               style: TextStyle(
                 fontSize: 15.sp,
                 color: Colors.white,
@@ -170,7 +183,9 @@ class _ProductsDetails extends StatelessWidget {
 }
 
 class _BackgroundImage extends StatelessWidget {
-  const _BackgroundImage();
+  const _BackgroundImage(this.product);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -179,9 +194,9 @@ class _BackgroundImage extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 400.sp,
-        child: const FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/400x300'),
+        child: FadeInImage(
+          placeholder: const AssetImage('assets/jar-loading.gif'),
+          image: NetworkImage(product.picture!),
           fit: BoxFit.cover,
         ),
       ),
