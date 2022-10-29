@@ -11,7 +11,7 @@ class LoadingPage extends StatelessWidget {
       ),
       body: const Center(
         child: CircularProgressIndicator(
-          color: Colors.amber,
+          color: Colors.black45,
         ),
       ),
     );

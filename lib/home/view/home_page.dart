@@ -28,7 +28,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<HomeCubit>(context).loadProducts();
+    final homeCubit = BlocProvider.of<HomeCubit>(context)..loadProducts();
 
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
@@ -41,11 +41,18 @@ class HomeView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Productos'),
           ),
-          body: ListView.builder(
-            itemCount: products.length,
-            itemBuilder: (BuildContext context, int index) => GestureDetector(
-              onTap: () => context.pushNamed(ProductPage.name),
-              child: ProductCard(product: products[index]),
+          body: RefreshIndicator(
+            color: Colors.black45,
+            onRefresh: homeCubit.loadProducts,
+            child: ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (BuildContext context, int index) => GestureDetector(
+                onTap: () => context.pushNamed(
+                  ProductPage.name,
+                  extra: products[index],
+                ),
+                child: ProductCard(product: products[index]),
+              ),
             ),
           ),
           floatingActionButton: FloatingActionButton(
