@@ -34,6 +34,9 @@ class ProductClient {
         final tempProduct = Product.fromMap(value as Map<String, dynamic>)
           ..id = key;
         products.add(tempProduct);
+        // if (products.contains(tempProduct)) {
+        //   products.add(tempProduct);
+        // }
       });
 
     try {
