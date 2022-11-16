@@ -47,10 +47,12 @@ class HomeView extends StatelessWidget {
             child: ListView.builder(
               itemCount: products.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () => context.pushNamed(
-                  ProductPage.name,
-                  extra: products[index],
-                ),
+                onTap: () {
+                  context.pushNamed(
+                    ProductPage.name,
+                    extra: products[index],
+                  );
+                },
                 child: ProductCard(product: products[index]),
               ),
             ),

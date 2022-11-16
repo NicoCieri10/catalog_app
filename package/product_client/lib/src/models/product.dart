@@ -43,6 +43,15 @@ class Product {
         'price': price,
       };
 
+  /// A method to copy a product
+  Product copy() => Product(
+        available: available,
+        name: name,
+        picture: picture,
+        price: price,
+        id: id,
+      );
+
   /// Availability of the product.
   final bool available;
 

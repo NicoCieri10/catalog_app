@@ -20,6 +20,9 @@ class ProductClient {
   /// The list of products
   final List<Product> products = [];
 
+  /// The selected product
+  late Product selectedProduct;
+
   //ToDo implementar cubit/TryCatch
 
   bool isLoading = true;
@@ -34,9 +37,6 @@ class ProductClient {
         final tempProduct = Product.fromMap(value as Map<String, dynamic>)
           ..id = key;
         products.add(tempProduct);
-        // if (products.contains(tempProduct)) {
-        //   products.add(tempProduct);
-        // }
       });
 
     try {
