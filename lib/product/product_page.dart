@@ -1,8 +1,11 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_validation/home/home_cubit/home_cubit.dart';
 import 'package:form_validation/ui/ui.dart';
 import 'package:form_validation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:product_repository/product_repository.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -11,52 +14,75 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
+    return BlocProvider(
+      create: (_) => HomeCubit(
+        productRepository: context.read<ProductRepository>(),
+      ),
+      child: const ProductView(),
+    );
+  }
+}
+
+class ProductView extends StatelessWidget {
+  const ProductView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
               children: [
-                const ProductImage(),
-                Positioned(
-                  top: 60.sp,
-                  left: 20.sp,
-                  child: IconButton(
-                    onPressed: context.pop,
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 40,
-                      color: Colors.white,
+                Stack(
+                  children: [
+                    ProductImage(
+                      url: state.selectedProduct?.picture,
                     ),
-                  ),
+                    Positioned(
+                      top: 60.sp,
+                      left: 20.sp,
+                      child: IconButton(
+                        onPressed: context.pop,
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 60.sp,
+                      right: 20.sp,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.camera_alt_outlined,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  top: 60.sp,
-                  right: 20.sp,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.camera_alt_outlined,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                  ),
+                const _ProductForm(),
+                SizedBox(
+                  height: 100.sp,
                 ),
               ],
             ),
-            const _ProductForm(),
-            SizedBox(
-              height: 100.sp,
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(
+              Icons.save_outlined,
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.save_outlined,
-        ),
-        onPressed: () {},
-      ),
+            onPressed: () {},
+          ),
+        );
+      },
     );
   }
 }

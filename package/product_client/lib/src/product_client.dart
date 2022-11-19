@@ -25,8 +25,6 @@ class ProductClient {
 
   //ToDo implementar cubit/TryCatch
 
-  bool isLoading = true;
-
   /// A method to make the request to the Database.
   Future<List<Product>> loadProducts() async {
     final url = Uri.https(_baseUrl, 'products.json');

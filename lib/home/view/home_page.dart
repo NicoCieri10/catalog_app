@@ -52,6 +52,7 @@ class HomeView extends StatelessWidget {
                     ProductPage.name,
                     extra: products[index],
                   );
+                  homeCubit.select(products[index]);
                 },
                 child: ProductCard(product: products[index]),
               ),
