@@ -5,12 +5,15 @@ import 'package:form_validation/home/home_cubit/home_cubit.dart';
 import 'package:form_validation/ui/ui.dart';
 import 'package:form_validation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key});
+  const ProductPage({super.key, this.product});
 
   static const name = 'product';
+
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class ProductPage extends StatelessWidget {
       create: (_) => HomeCubit(
         productRepository: context.read<ProductRepository>(),
       ),
-      child: const ProductView(),
+      child: ProductView(product: product),
     );
   }
 }
@@ -26,7 +29,10 @@ class ProductPage extends StatelessWidget {
 class ProductView extends StatelessWidget {
   const ProductView({
     super.key,
+    this.product,
   });
+
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,7 @@ class ProductView extends StatelessWidget {
                 Stack(
                   children: [
                     ProductImage(
-                      url: state.selectedProduct?.picture,
+                      product: product,
                     ),
                     Positioned(
                       top: 60.sp,

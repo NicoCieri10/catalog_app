@@ -1,10 +1,11 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:product_client/product_client.dart';
 
 class ProductImage extends StatelessWidget {
-  const ProductImage({super.key, this.url});
+  const ProductImage({super.key, this.product});
 
-  final String? url;
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +24,14 @@ class ProductImage extends StatelessWidget {
             topLeft: Radius.circular(45.sp),
             topRight: Radius.circular(45.sp),
           ),
-          child: url == null
+          child: product?.picture == null
               ? const Image(
                   image: AssetImage('assets/no-image.png'),
                   fit: BoxFit.cover,
                 )
               : FadeInImage(
                   image: NetworkImage(
-                    url!,
+                    product!.picture!,
                   ),
                   placeholder: const AssetImage('assets/jar-loading.gif'),
                   fit: BoxFit.cover,

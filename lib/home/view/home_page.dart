@@ -50,9 +50,11 @@ class HomeView extends StatelessWidget {
                 onTap: () {
                   context.pushNamed(
                     ProductPage.name,
-                    extra: products[index],
+                    extra: {
+                      'product': products[index],
+                    },
                   );
-                  homeCubit.select(products[index]);
+                  //homeCubit.select(products[index]);
                 },
                 child: ProductCard(product: products[index]),
               ),
