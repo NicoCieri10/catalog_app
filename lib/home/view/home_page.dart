@@ -54,6 +54,7 @@ class HomeView extends StatelessWidget {
                       'product': products[index],
                     },
                   );
+                  // TODO(NicoCieri10): arreglar manejo de imagenes ProductPage
                   //homeCubit.select(products[index]);
                 },
                 child: ProductCard(product: products[index]),
