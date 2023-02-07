@@ -1,10 +1,10 @@
 import 'package:appsize/appsize.dart';
+import 'package:catalog_app/home/home_cubit/home_cubit.dart';
+import 'package:catalog_app/theme/theme.dart';
+import 'package:catalog_app/ui/ui.dart';
+import 'package:catalog_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_validation/home/home_cubit/home_cubit.dart';
-import 'package:form_validation/ui/ui.dart';
-import 'package:form_validation/widgets/widgets.dart';
-import 'package:go_router/go_router.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -43,52 +43,45 @@ class ProductView extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            title: Text(product?.name ?? 'Producto'),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.camera_alt_outlined,
+                  size: 25.sp,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    ProductImage(
-                      product: product,
-                    ),
-                    Positioned(
-                      top: 60.sp,
-                      left: 20.sp,
-                      child: IconButton(
-                        onPressed: context.pop,
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 40,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 60.sp,
-                      right: 20.sp,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.camera_alt_outlined,
-                          size: 40,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const _ProductForm(),
-                SizedBox(
-                  height: 100.sp,
-                ),
-              ],
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.all(10.sp),
+              child: Column(
+                children: [
+                  ProductImage(
+                    product: product,
+                  ),
+                  const _ProductForm(),
+                  SizedBox(
+                    height: 100.sp,
+                  ),
+                ],
+              ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(
-              Icons.save_outlined,
+          floatingActionButton: Padding(
+            padding: EdgeInsets.all(10.sp),
+            child: FloatingActionButton(
+              child: const Icon(
+                Icons.save_outlined,
+              ),
+              onPressed: () {},
             ),
-            onPressed: () {},
           ),
         );
       },
@@ -138,7 +131,7 @@ class _ProductForm extends StatelessWidget {
                 SwitchListTile.adaptive(
                   value: true,
                   title: const Text('Disponible'),
-                  activeColor: Colors.blueGrey,
+                  activeColor: myThemeLight.primaryColor,
                   onChanged: (value) {},
                 ),
                 SizedBox(
@@ -158,11 +151,11 @@ class _ProductForm extends StatelessWidget {
           bottomRight: Radius.circular(25.sp),
           bottomLeft: Radius.circular(25.sp),
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, 5),
-            blurRadius: 5,
+            color: Colors.black45,
+            blurRadius: 10,
+            offset: Offset(0, 5),
           ),
         ],
       );

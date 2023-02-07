@@ -1,10 +1,10 @@
 import 'package:appsize/appsize.dart';
+import 'package:catalog_app/home/home.dart';
+import 'package:catalog_app/login/cubit/login_cubit.dart';
+import 'package:catalog_app/ui/ui.dart';
+import 'package:catalog_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_validation/home/home.dart';
-import 'package:form_validation/login/cubit/login_cubit.dart';
-import 'package:form_validation/ui/ui.dart';
-import 'package:form_validation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {

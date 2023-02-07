@@ -1,3 +1,4 @@
+import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -6,12 +7,9 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('LoadingPage'),
-      ),
-      body: const Center(
+      body: Center(
         child: CircularProgressIndicator(
-          color: Colors.black45,
+          color: myThemeLight.primaryColor,
         ),
       ),
     );

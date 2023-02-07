@@ -1,12 +1,13 @@
 import 'package:appsize/appsize.dart';
+import 'package:catalog_app/home/home.dart';
+import 'package:catalog_app/l10n/l10n.dart';
+import 'package:catalog_app/login/login.dart';
+import 'package:catalog_app/product/product_page.dart';
+import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:form_validation/home/home.dart';
-import 'package:form_validation/l10n/l10n.dart';
-import 'package:form_validation/login/login.dart';
-import 'package:form_validation/product/product_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
@@ -19,10 +20,10 @@ class App extends StatelessWidget {
     final productClient = ProductClient();
 
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        systemNavigationBarColor: Colors.transparent,
+      SystemUiOverlayStyle.light.copyWith(
+        systemNavigationBarColor: myThemeLight.primaryColor,
         systemNavigationBarIconBrightness: Brightness.light,
-        statusBarColor: Colors.transparent,
+        statusBarColor: myThemeLight.primaryColor,
       ),
     );
 
@@ -50,17 +51,7 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 246, 246, 246),
-        appBarTheme: AppBarTheme(
-          elevation: 10,
-          color: Colors.blue[800],
-        ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          elevation: 10,
-          backgroundColor: Colors.blue[800],
-        ),
-      ),
+      theme: myThemeLight,
     );
   }
 

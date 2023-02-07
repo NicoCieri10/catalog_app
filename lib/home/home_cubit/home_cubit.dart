@@ -9,9 +9,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit({
     required ProductRepository productRepository,
   })  : _productRepository = productRepository,
-        super(
-          const HomeState(products: []),
-        );
+        super(const HomeState());
 
   final ProductRepository _productRepository;
   final status = HomeStatus;

@@ -27,14 +27,14 @@ class ProductImage extends StatelessWidget {
           child: product?.picture == null
               ? const Image(
                   image: AssetImage('assets/no-image.png'),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 )
               : FadeInImage(
                   image: NetworkImage(
                     product!.picture!,
                   ),
                   placeholder: const AssetImage('assets/jar-loading.gif'),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
         ),
       ),
@@ -42,16 +42,16 @@ class ProductImage extends StatelessWidget {
   }
 
   BoxDecoration _buildBoxDecoration() => BoxDecoration(
-        color: Colors.black45,
+        color: const Color.fromARGB(255, 246, 246, 246),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(45.sp),
-          topRight: Radius.circular(45.sp),
+          topLeft: Radius.circular(25.sp),
+          topRight: Radius.circular(25.sp),
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black45,
             blurRadius: 10,
-            offset: const Offset(0, 5),
+            offset: Offset(0, 5),
           ),
         ],
       );

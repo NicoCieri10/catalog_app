@@ -10,7 +10,7 @@ enum HomeStatus {
 class HomeState extends Equatable {
   const HomeState({
     this.status = HomeStatus.initial,
-    required this.products,
+    this.products = const [],
   });
 
   final HomeStatus status;

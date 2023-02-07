@@ -1,4 +1,5 @@
 import 'package:appsize/appsize.dart';
+import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:product_client/product_client.dart';
 
@@ -46,11 +47,11 @@ class ProductCard extends StatelessWidget {
 
   BoxDecoration _cardBorders() {
     return BoxDecoration(
+      color: Colors.white,
       borderRadius: BorderRadius.circular(25.sp),
       boxShadow: const [
         BoxShadow(
           color: Colors.black45,
-          offset: Offset(0, 5),
           blurRadius: 10,
         ),
       ],
@@ -106,7 +107,7 @@ class _PriceTag extends StatelessWidget {
       height: 60.sp,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: Colors.blueGrey,
+        color: myThemeLight.hintColor,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(25.sp),
           bottomLeft: Radius.circular(25.sp),
@@ -174,7 +175,7 @@ class _ProductsDetails extends StatelessWidget {
   }
 
   BoxDecoration _buildBoxDecoration() => BoxDecoration(
-        color: Colors.blueGrey,
+        color: myThemeLight.hintColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25.sp),
           topRight: Radius.circular(25.sp),
@@ -202,7 +203,7 @@ class _BackgroundImage extends StatelessWidget {
             : FadeInImage(
                 placeholder: const AssetImage('assets/jar-loading.gif'),
                 image: NetworkImage(product.picture!),
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
       ),
     );

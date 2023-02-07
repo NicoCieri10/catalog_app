@@ -5,8 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:form_validation/app/app.dart';
-import 'package:form_validation/bootstrap.dart';
+import 'package:catalog_app/app/app.dart';
+import 'package:catalog_app/bootstrap.dart';
 
 void main() {
   bootstrap(App.new);

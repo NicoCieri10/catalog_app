@@ -1,8 +1,8 @@
+import 'package:catalog_app/home/home_cubit/home_cubit.dart';
+import 'package:catalog_app/loading/loading.dart';
+import 'package:catalog_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_validation/home/home_cubit/home_cubit.dart';
-import 'package:form_validation/loading/loading.dart';
-import 'package:form_validation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
@@ -42,10 +42,11 @@ class HomeView extends StatelessWidget {
             title: const Text('Productos'),
           ),
           body: RefreshIndicator(
-            color: Colors.black45,
+            color: Colors.blue[800],
             onRefresh: homeCubit.loadProducts,
             child: ListView.builder(
-              itemCount: products.length,
+              physics: const BouncingScrollPhysics(),
+              itemCount: state.products.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
