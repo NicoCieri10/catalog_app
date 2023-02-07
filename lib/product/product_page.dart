@@ -9,11 +9,14 @@ import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key, this.product});
+  const ProductPage(
+    this.product, {
+    super.key,
+  });
 
   static const name = 'product';
 
-  final Product? product;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {

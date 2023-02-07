@@ -10,7 +10,7 @@ class HomeCubit extends Cubit<HomeState> {
     required ProductRepository productRepository,
   })  : _productRepository = productRepository,
         super(
-          HomeState(products: const []),
+          const HomeState(products: []),
         );
 
   final ProductRepository _productRepository;
@@ -40,14 +40,6 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       state.copyWith(
         status: status,
-      ),
-    );
-  }
-
-  void select(Product product) {
-    emit(
-      state.copyWith(
-        selectedProduct: product,
       ),
     );
   }

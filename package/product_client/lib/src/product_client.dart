@@ -23,7 +23,7 @@ class ProductClient {
   /// The selected product
   late Product selectedProduct;
 
-  //TODO(NicoCieri10): implementar cubit/TryCatch
+  //ToDo(NicoCieri10): implementar cubit/TryCatch
 
   /// A method to make the request to the Database.
   Future<List<Product>> loadProducts() async {

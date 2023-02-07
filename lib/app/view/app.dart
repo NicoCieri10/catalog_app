@@ -51,20 +51,21 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.grey[500],
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          color: Colors.black87,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 246, 246, 246),
+        appBarTheme: AppBarTheme(
+          elevation: 10,
+          color: Colors.blue[800],
         ),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          elevation: 0,
-          backgroundColor: Colors.black87,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          elevation: 10,
+          backgroundColor: Colors.blue[800],
         ),
       ),
     );
   }
 
   final GoRouter _router = GoRouter(
+    errorBuilder: (context, state) => const RoutingErrorPage(),
     routes: <GoRoute>[
       GoRoute(
         path: '/',
@@ -79,8 +80,29 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/product',
         name: 'product',
-        builder: (context, state) => const ProductPage(),
+        builder: (context, state) {
+          final product = (state.extra as Map?)?['product'] as Product?;
+          if (product == null) {
+            throw ArgumentError.notNull('product');
+          }
+          return ProductPage(product);
+        },
       ),
     ],
   );
+}
+
+class RoutingErrorPage extends StatelessWidget {
+  const RoutingErrorPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          'No hay rutas',
+        ),
+      ),
+    );
+  }
 }

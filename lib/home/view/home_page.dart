@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_validation/home/home_cubit/home_cubit.dart';
 import 'package:form_validation/loading/loading.dart';
-import 'package:form_validation/product/product_page.dart';
 import 'package:form_validation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
 class HomePage extends StatelessWidget {
@@ -46,19 +46,19 @@ class HomeView extends StatelessWidget {
             onRefresh: homeCubit.loadProducts,
             child: ListView.builder(
               itemCount: products.length,
-              itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () {
-                  context.pushNamed(
-                    ProductPage.name,
-                    extra: {
-                      'product': products[index],
-                    },
-                  );
-                  // TODO(NicoCieri10): arreglar manejo de imagenes ProductPage
-                  //homeCubit.select(products[index]);
-                },
-                child: ProductCard(product: products[index]),
-              ),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    context.pushNamed(
+                      'product',
+                      extra: <String, Product>{
+                        'product': products[index],
+                      },
+                    );
+                  },
+                  child: ProductCard(product: products[index]),
+                );
+              },
             ),
           ),
           floatingActionButton: FloatingActionButton(
