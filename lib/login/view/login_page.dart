@@ -139,6 +139,7 @@ class _LoginForm extends StatelessWidget {
 
                         loginForm.changeState(LoginStatus.success);
 
+                        // ignore: use_build_context_synchronously
                         context.replaceNamed(HomePage.name);
                       },
                 child: const ButtonText(),

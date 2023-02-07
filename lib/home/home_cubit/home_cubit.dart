@@ -10,7 +10,7 @@ class HomeCubit extends Cubit<HomeState> {
     required ProductRepository productRepository,
   })  : _productRepository = productRepository,
         super(
-          HomeState(products: []),
+          HomeState(products: const []),
         );
 
   final ProductRepository _productRepository;
@@ -31,7 +31,9 @@ class HomeCubit extends Cubit<HomeState> {
           products: newProducts,
         ),
       );
-    } catch (error) {}
+    } catch (error) {
+      state.copyWith(status: HomeStatus.failure);
+    }
   }
 
   void changeState(HomeStatus status) {

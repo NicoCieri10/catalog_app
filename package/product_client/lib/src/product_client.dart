@@ -23,19 +23,22 @@ class ProductClient {
   /// The selected product
   late Product selectedProduct;
 
-  //ToDo implementar cubit/TryCatch
+  //TODO(NicoCieri10): implementar cubit/TryCatch
 
   /// A method to make the request to the Database.
   Future<List<Product>> loadProducts() async {
     final url = Uri.https(_baseUrl, 'products.json');
     final resp = await _client.get(url);
 
+    // ignore: unused_local_variable
     final productsMap = jsonDecode(resp.body) as Map<String, dynamic>
-      ..forEach((key, value) {
-        final tempProduct = Product.fromMap(value as Map<String, dynamic>)
-          ..id = key;
-        products.add(tempProduct);
-      });
+      ..forEach(
+        (key, value) {
+          final tempProduct = Product.fromMap(value as Map<String, dynamic>)
+            ..id = key;
+          products.add(tempProduct);
+        },
+      );
 
     try {
       return products;
