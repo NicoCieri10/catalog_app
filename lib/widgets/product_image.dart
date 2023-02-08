@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:product_client/product_client.dart';
 
 class ProductImage extends StatelessWidget {
-  const ProductImage({super.key, this.product});
+  const ProductImage(this.product, {super.key});
 
   final Product? product;
 

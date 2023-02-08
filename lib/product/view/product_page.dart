@@ -1,12 +1,12 @@
 import 'package:appsize/appsize.dart';
-import 'package:catalog_app/home/cubit/home_cubit.dart';
+import 'package:catalog_app/product/cubit/product_cubit.dart';
 import 'package:catalog_app/theme/theme.dart';
 import 'package:catalog_app/ui/ui.dart';
 import 'package:catalog_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_client/product_client.dart';
-import 'package:product_repository/product_repository.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage(
@@ -21,17 +21,14 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(
-        productRepository: context.read<ProductRepository>(),
-      ),
-      child: ProductView(product: product),
+      create: (context) => ProductCubit(),
+      child: _ProductView(product: product),
     );
   }
 }
 
-class ProductView extends StatelessWidget {
-  const ProductView({
-    super.key,
+class _ProductView extends StatelessWidget {
+  const _ProductView({
     this.product,
   });
 
@@ -39,7 +36,7 @@ class ProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
+    return BlocConsumer<ProductCubit, ProductState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -63,10 +60,8 @@ class ProductView extends StatelessWidget {
               padding: EdgeInsets.all(10.sp),
               child: Column(
                 children: [
-                  ProductImage(
-                    product: product,
-                  ),
-                  const _ProductForm(),
+                  ProductImage(product),
+                  _ProductForm(product),
                   SizedBox(
                     height: 100.sp,
                   ),
@@ -90,10 +85,17 @@ class ProductView extends StatelessWidget {
 }
 
 class _ProductForm extends StatelessWidget {
-  const _ProductForm();
+  const _ProductForm(
+    this.product,
+  );
+
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
+    final productCubit = BlocProvider.of<ProductCubit>(context)
+      ..actualProduct(product);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.sp),
       child: Container(
@@ -110,6 +112,14 @@ class _ProductForm extends StatelessWidget {
                   height: 10.sp,
                 ),
                 TextFormField(
+                  initialValue: product?.name,
+                  onChanged: (value) => product?.name = value,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'El nombre es inválido';
+                    }
+                    return null;
+                  },
                   decoration: InputDecorations.authInputDecoration(
                     hintText: 'name',
                     labelText: 'Nombre: ',
@@ -119,6 +129,19 @@ class _ProductForm extends StatelessWidget {
                   height: 30.sp,
                 ),
                 TextFormField(
+                  initialValue: (product?.price).toString(),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?\.?\d{0,2}'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (double.tryParse(value) == null) {
+                      product?.price = 0;
+                    } else {
+                      product?.price = double.parse(value);
+                    }
+                  },
                   keyboardType: TextInputType.number,
                   decoration: InputDecorations.authInputDecoration(
                     hintText: r'$111.11',
@@ -128,12 +151,17 @@ class _ProductForm extends StatelessWidget {
                 SizedBox(
                   height: 30.sp,
                 ),
+
+                // TODO: arreglar SwitchListTile
                 SwitchListTile.adaptive(
-                  value: true,
-                  title: const Text('Disponible'),
+                  value: product?.available ?? false,
+                  title: const Text('Disponible:'),
                   activeColor: myThemeLight.primaryColor,
-                  onChanged: (value) {},
+                  onChanged: (value) => productCubit.updateAvailability(
+                    value: value,
+                  ),
                 ),
+
                 SizedBox(
                   height: 30.sp,
                 ),

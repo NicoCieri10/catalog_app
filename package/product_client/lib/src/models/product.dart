@@ -53,16 +53,16 @@ class Product {
       );
 
   /// Availability of the product.
-  final bool available;
+  bool available;
 
   /// Name of the product.
-  final String name;
+  String name;
 
   /// Picture of the product.
-  final String? picture;
+  String? picture;
 
   /// Price of the product.
-  final num price;
+  num price;
 
   /// ID of the product.
   String? id;
