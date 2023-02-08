@@ -18,7 +18,7 @@ class ProductImage extends StatelessWidget {
       child: Container(
         decoration: _buildBoxDecoration(),
         width: double.infinity,
-        height: 450.sp,
+        height: 380.sp,
         child: ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(45.sp),

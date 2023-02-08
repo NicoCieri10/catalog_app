@@ -2,7 +2,7 @@ import 'package:appsize/appsize.dart';
 import 'package:catalog_app/home/home.dart';
 import 'package:catalog_app/l10n/l10n.dart';
 import 'package:catalog_app/login/login.dart';
-import 'package:catalog_app/product/product_page.dart';
+import 'package:catalog_app/product/product.dart';
 import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

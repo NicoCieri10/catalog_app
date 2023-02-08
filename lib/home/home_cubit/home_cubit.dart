@@ -14,7 +14,6 @@ class HomeCubit extends Cubit<HomeState> {
   final ProductRepository _productRepository;
   final status = HomeStatus;
 
-  //ToDo: call loadProducts() in intialState
   Future<void> loadProducts() async {
     emit(
       state.copyWith(status: HomeStatus.attempting),

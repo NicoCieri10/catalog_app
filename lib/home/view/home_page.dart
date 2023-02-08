@@ -53,7 +53,7 @@ class HomeView extends StatelessWidget {
                     context.pushNamed(
                       'product',
                       extra: <String, Product>{
-                        'product': products[index],
+                        'product': products[index].copy(),
                       },
                     );
                   },
