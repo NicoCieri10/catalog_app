@@ -1,5 +1,5 @@
 import 'package:appsize/appsize.dart';
-import 'package:catalog_app/home/home_cubit/home_cubit.dart';
+import 'package:catalog_app/home/cubit/home_cubit.dart';
 import 'package:catalog_app/theme/theme.dart';
 import 'package:catalog_app/ui/ui.dart';
 import 'package:catalog_app/widgets/widgets.dart';

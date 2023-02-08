@@ -1,10 +1,29 @@
 part of 'product_cubit.dart';
 
-abstract class ProductState extends Equatable {
-  const ProductState();
-
-  @override
-  List<Object> get props => [];
+enum ProductStatus {
+  initial,
+  attempting,
+  success,
+  failure,
 }
 
-class ProductInitial extends ProductState {}
+class ProductState extends Equatable {
+  const ProductState({
+    this.status = ProductStatus.initial,
+  });
+
+  final ProductStatus status;
+
+  @override
+  List<Object> get props => [
+        status,
+      ];
+
+  ProductState copyWith({
+    ProductStatus? status,
+  }) {
+    return ProductState(
+      status: status ?? this.status,
+    );
+  }
+}
