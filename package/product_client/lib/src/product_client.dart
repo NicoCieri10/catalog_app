@@ -17,8 +17,6 @@ class ProductClient {
   static const _baseUrl =
       'flutter-catalog-app-9a394-default-rtdb.firebaseio.com';
 
-  //ToDo(NicoCieri10): implementar cubit/TryCatch
-
   /// A method to make the request to the Database.
   Future<List<Product>> loadProducts() async {
     final url = Uri.https(_baseUrl, 'products.json');
@@ -38,6 +36,22 @@ class ProductClient {
     } catch (e) {
       throw const SpecifiedTypeNotMatchedException();
     }
+  }
+
+  /// A method to save changes or create a new Product
+  Future<void> saveOrCreateProduct(Product? product) async {
+    if (product?.id == null) {
+    } else {
+      await updateProduct(product);
+    }
+  }
+
+  /// A method to update a Product
+  Future<String?> updateProduct(Product? product) async {
+    final url = Uri.https(_baseUrl, 'products/${product?.id}.json');
+    await _client.put(url, body: product?.toJson());
+
+    return product?.id;
   }
 }
 

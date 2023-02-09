@@ -16,4 +16,9 @@ class ProductRepository {
   Future<List<Product>> loadProducts() {
     return _client.loadProducts();
   }
+
+  /// Method to save or create a product.
+  Future<void> saveOrCreateProduct(Product? product) async {
+    return _client.saveOrCreateProduct(product);
+  }
 }

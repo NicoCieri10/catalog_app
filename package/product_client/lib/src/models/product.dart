@@ -32,10 +32,10 @@ class Product {
     return Product.fromMap(json.decode(str) as Map<String, dynamic>);
   }
 
-  ///
+  /// Converts a map into a json
   String toJson() => json.encode(toMap());
 
-  /// converts a Json into a map
+  /// Converts a Json into a map
   Map<String, dynamic> toMap() => {
         'available': available,
         'name': name,

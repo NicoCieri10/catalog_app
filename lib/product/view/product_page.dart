@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_client/product_client.dart';
+import 'package:product_repository/product_repository.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage(
@@ -21,7 +22,9 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductCubit(),
+      create: (context) => ProductCubit(
+        productRepository: context.read<ProductRepository>(),
+      ),
       child: _ProductView(product: product),
     );
   }
@@ -77,10 +80,13 @@ class _ProductView extends StatelessWidget {
             floatingActionButton: Padding(
               padding: EdgeInsets.all(10.sp),
               child: FloatingActionButton(
+                onPressed: () async {
+                  if (!productCubit.isValidForm()) return;
+                  await productCubit.editProduct(productCubit.product);
+                },
                 child: const Icon(
                   Icons.save_outlined,
                 ),
-                onPressed: () {},
               ),
             ),
           ),
@@ -110,6 +116,8 @@ class _ProductForm extends StatelessWidget {
         width: double.infinity,
         decoration: _buildBoxDecoration(),
         child: Form(
+          key: productCubit.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 15.sp,
