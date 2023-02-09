@@ -10,25 +10,25 @@ enum ProductStatus {
 class ProductState extends Equatable {
   const ProductState({
     this.status = ProductStatus.initial,
-    this.product,
+    this.availability = false,
   });
 
   final ProductStatus status;
-  final Product? product;
+  final bool availability;
 
   @override
   List<Object> get props => [
         status,
-        product!,
+        availability,
       ];
 
   ProductState copyWith({
     ProductStatus? status,
-    Product? product,
+    bool? availability,
   }) {
     return ProductState(
       status: status ?? this.status,
-      product: product ?? this.product,
+      availability: availability ?? this.availability,
     );
   }
 }

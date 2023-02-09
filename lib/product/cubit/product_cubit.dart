@@ -12,6 +12,8 @@ class ProductCubit extends Cubit<ProductState> {
 
   final status = ProductStatus;
 
+  Product? product;
+
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;
   }
@@ -24,24 +26,20 @@ class ProductCubit extends Cubit<ProductState> {
     );
   }
 
-  // TODO: usar un set en lugar de una funcion
-  void updateAvailability({required bool value}) {
-    // print(value);
-    state.product?.available = value;
-    // state.copyWith(
-    //   product: Product(
-    //     available: value,
-    //     name: state.product!.name,
-    //     price: state.product!.price,
-    //     id: state.product!.id,
-    //     picture: state.product!.picture,
-    //   ),
-    // );
-  }
+  // Product update() => Product(
+  //       available: product?.available ?? false,
+  //       name: product?.name ?? '',
+  //       picture: product?.picture,
+  //       price: product?.price ?? 0,
+  //       id: product?.id,
+  //     );
 
-  void actualProduct(Product? product) {
-    state.copyWith(
-      product: product,
+  void updateAvailability({required bool value}) {
+    product?.available = value;
+    emit(
+      state.copyWith(
+        availability: value,
+      ),
     );
   }
 }

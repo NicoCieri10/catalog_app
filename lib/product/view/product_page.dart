@@ -36,46 +36,52 @@ class _ProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productCubit = BlocProvider.of<ProductCubit>(context)
+      ..product = product;
+
     return BlocConsumer<ProductCubit, ProductState>(
       listener: (context, state) {},
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(product?.name ?? 'Producto'),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.camera_alt_outlined,
-                  size: 25.sp,
-                  color: Colors.white,
+        return GestureDetector(
+          onTap: FocusScope.of(context).unfocus,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(productCubit.product?.name ?? 'Producto'),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.camera_alt_outlined,
+                    size: 25.sp,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.all(10.sp),
+                child: Column(
+                  children: [
+                    ProductImage(productCubit.product),
+                    _ProductForm(productCubit.product),
+                    SizedBox(
+                      height: 100.sp,
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                children: [
-                  ProductImage(product),
-                  _ProductForm(product),
-                  SizedBox(
-                    height: 100.sp,
-                  ),
-                ],
-              ),
             ),
-          ),
-          floatingActionButton: Padding(
-            padding: EdgeInsets.all(10.sp),
-            child: FloatingActionButton(
-              child: const Icon(
-                Icons.save_outlined,
+            floatingActionButton: Padding(
+              padding: EdgeInsets.all(10.sp),
+              child: FloatingActionButton(
+                child: const Icon(
+                  Icons.save_outlined,
+                ),
+                onPressed: () {},
               ),
-              onPressed: () {},
             ),
           ),
         );
@@ -93,8 +99,10 @@ class _ProductForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productCubit = BlocProvider.of<ProductCubit>(context)
-      ..actualProduct(product);
+    final productCubit = BlocProvider.of<ProductCubit>(context);
+    //   ..product = product;
+    //   ..updateAvailability(value: product?.available ?? false);
+    // final productUpdate = productCubit.product;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.sp),
@@ -151,8 +159,6 @@ class _ProductForm extends StatelessWidget {
                 SizedBox(
                   height: 30.sp,
                 ),
-
-                // TODO: arreglar SwitchListTile
                 SwitchListTile.adaptive(
                   value: product?.available ?? false,
                   title: const Text('Disponible:'),
@@ -161,7 +167,6 @@ class _ProductForm extends StatelessWidget {
                     value: value,
                   ),
                 ),
-
                 SizedBox(
                   height: 30.sp,
                 ),
