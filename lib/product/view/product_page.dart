@@ -2,13 +2,12 @@ import 'package:appsize/appsize.dart';
 import 'package:catalog_app/product/cubit/product_cubit.dart';
 import 'package:catalog_app/product/widgets/widgets.dart';
 import 'package:catalog_app/theme/theme.dart';
-import 'package:catalog_app/ui/ui.dart';
-import 'package:catalog_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
+import 'package:ui/ui.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage(

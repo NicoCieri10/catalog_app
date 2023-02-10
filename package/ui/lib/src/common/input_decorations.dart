@@ -1,7 +1,9 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 
+/// A class for inputs decorations
 class InputDecorations {
+  /// Authentication input decoration
   static InputDecoration authInputDecoration({
     required String hintText,
     required String labelText,

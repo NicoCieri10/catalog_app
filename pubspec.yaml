@@ -23,6 +23,8 @@ dependencies:
     path: package/product_client
   product_repository:
     path: package/product_repository
+  ui:
+    path: package/ui
 
 dev_dependencies:
   bloc_test: ^9.1.1

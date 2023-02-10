@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_client/product_client.dart';
 
+/// A class for the image product
 class ProductImage extends StatelessWidget {
+  /// ProductImage constructor
   const ProductImage({super.key});
 
   @override

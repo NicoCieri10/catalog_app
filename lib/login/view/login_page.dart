@@ -1,11 +1,12 @@
 import 'package:appsize/appsize.dart';
 import 'package:catalog_app/home/home.dart';
 import 'package:catalog_app/login/cubit/login_cubit.dart';
-import 'package:catalog_app/ui/ui.dart';
-import 'package:catalog_app/widgets/widgets.dart';
+import 'package:catalog_app/login/widgets/widgets.dart';
+import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ui/ui.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -28,33 +29,38 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AuthBackground(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 250.sp,
-              ),
-              CardContainer(
-                child: Column(
-                  children: [
-                    SizedBox(height: 10.sp),
-                    Text(
-                      'Login',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    SizedBox(height: 30.sp),
-                    const _LoginForm(),
-                  ],
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: Scaffold(
+        body: AuthBackground(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 250.sp),
+                CardContainer(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.sp),
+                      Text(
+                        'Login',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      SizedBox(height: 30.sp),
+                      const _LoginForm(),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 50.sp),
-              const Text(
-                'Crear una nueva cuenta',
-              ),
-              SizedBox(height: 50.sp),
-            ],
+                SizedBox(height: 50.sp),
+                Text(
+                  style: TextStyle(
+                    color: myThemeLight.primaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  'Crear una nueva cuenta',
+                ),
+                SizedBox(height: 50.sp),
+              ],
+            ),
           ),
         ),
       ),
@@ -72,8 +78,7 @@ class _LoginForm extends StatelessWidget {
     return Form(
       key: cubit.state.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: BlocConsumer<LoginCubit, LoginState>(
-        listener: (context, state) {},
+      child: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
           return Column(
             children: [

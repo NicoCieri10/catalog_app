@@ -3,7 +3,9 @@ import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:product_client/product_client.dart';
 
+/// A class for the product card
 class ProductCard extends StatelessWidget {
+  /// The ProductCard constructor
   const ProductCard({
     super.key,
     required this.product,
