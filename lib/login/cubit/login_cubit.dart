@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(const LoginState());
-
-  final formKey = GlobalKey<FormState>();
+  LoginCubit()
+      : super(
+          LoginState(
+            formKey: GlobalKey<FormState>(),
+          ),
+        );
 
   String email = '';
   String password = '';
-
-  bool isValidForm() {
-    return formKey.currentState?.validate() ?? false;
-  }
 
   final status = LoginStatus;
 

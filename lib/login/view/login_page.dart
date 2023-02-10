@@ -67,10 +67,10 @@ class _LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginForm = BlocProvider.of<LoginCubit>(context);
+    final cubit = context.read<LoginCubit>();
 
     return Form(
-      key: loginForm.formKey,
+      key: cubit.state.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {},
@@ -85,7 +85,7 @@ class _LoginForm extends StatelessWidget {
                   labelText: 'Email',
                   prefixIcon: Icons.alternate_email_rounded,
                 ),
-                onChanged: loginForm.addEmail,
+                onChanged: cubit.addEmail,
                 validator: (value) {
                   const pattern =
                       r'^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -106,7 +106,7 @@ class _LoginForm extends StatelessWidget {
                   labelText: 'Password',
                   prefixIcon: Icons.lock_outline,
                 ),
-                onChanged: loginForm.addPassword,
+                onChanged: cubit.addPassword,
                 validator: (value) {
                   return (value != null && value.length >= 6)
                       ? null
@@ -127,17 +127,19 @@ class _LoginForm extends StatelessWidget {
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();
+                        final isValidForm =
+                            cubit.state.formKey.currentState?.validate();
 
-                        if (!loginForm.isValidForm()) return;
+                        if (!(isValidForm ?? false)) return;
                         // nico@gmail.com
 
-                        loginForm.changeState(LoginStatus.attempting);
+                        cubit.changeState(LoginStatus.attempting);
 
                         await Future<void>.delayed(
                           const Duration(seconds: 2),
                         );
 
-                        loginForm.changeState(LoginStatus.success);
+                        cubit.changeState(LoginStatus.success);
 
                         // ignore: use_build_context_synchronously
                         context.replaceNamed(HomePage.name);

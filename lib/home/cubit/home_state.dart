@@ -16,12 +16,6 @@ class HomeState extends Equatable {
   final HomeStatus status;
   final List<Product> products;
 
-  @override
-  List<Object?> get props => [
-        status,
-        products,
-      ];
-
   HomeState copyWith({
     HomeStatus? status,
     List<Product>? products,
@@ -31,4 +25,10 @@ class HomeState extends Equatable {
       products: products ?? this.products,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        status,
+        products,
+      ];
 }
