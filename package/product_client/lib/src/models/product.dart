@@ -52,6 +52,22 @@ class Product {
         id: id,
       );
 
+  /// A method to return the same product with different atributes
+  Product copyWith({
+    bool? available,
+    String? name,
+    String? picture,
+    num? price,
+  }) {
+    return Product(
+      id: id,
+      available: available ?? this.available,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      picture: picture ?? this.picture,
+    );
+  }
+
   /// Availability of the product.
   bool available;
 

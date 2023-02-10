@@ -9,26 +9,42 @@ part 'product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit({
     required ProductRepository productRepository,
+    required Product product,
   })  : _productRepository = productRepository,
-        super(const ProductState());
+        super(
+          ProductState(
+            product: product,
+            formKey: GlobalKey<FormState>(),
+          ),
+        );
 
   final ProductRepository _productRepository;
-  final formKey = GlobalKey<FormState>();
+
   final status = ProductStatus;
 
-  Product? product;
-
-  bool isValidForm() {
-    return formKey.currentState?.validate() ?? false;
+  void updateProduct({
+    String? name,
+    String? picture,
+    num? price,
+  }) {
+    emit(
+      state.copyWith(
+        product: state.product.copyWith(
+          name: name,
+          price: price,
+          picture: picture,
+        ),
+      ),
+    );
   }
 
-  Future<void> editProduct(Product? product) async {
+  Future<void> editProduct() async {
     emit(
       state.copyWith(status: ProductStatus.attempting),
     );
 
     try {
-      await _productRepository.saveOrCreateProduct(product);
+      await _productRepository.saveOrCreateProduct(state.product);
 
       emit(
         state.copyWith(
@@ -48,11 +64,13 @@ class ProductCubit extends Cubit<ProductState> {
     );
   }
 
-  void updateAvailability({required bool value}) {
-    product?.available = value;
+  void updateAvailability() {
+    final product = state.product;
     emit(
       state.copyWith(
-        availability: value,
+        product: product.copyWith(
+          available: !product.available,
+        ),
       ),
     );
   }
