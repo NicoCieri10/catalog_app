@@ -5,7 +5,7 @@ import 'package:catalog_app/login/widgets/widgets.dart';
 import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:ui/ui.dart';
 
 class LoginPage extends StatelessWidget {
@@ -147,7 +147,7 @@ class _LoginForm extends StatelessWidget {
                         cubit.changeState(LoginStatus.success);
 
                         // ignore: use_build_context_synchronously
-                        context.replaceNamed(HomePage.name);
+                        context.goNamed(HomePage.name);
                       },
                 child: const ButtonText(),
               ),

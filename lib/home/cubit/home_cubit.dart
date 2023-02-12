@@ -8,8 +8,13 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit({
     required ProductRepository productRepository,
+    required Product product,
   })  : _productRepository = productRepository,
-        super(const HomeState());
+        super(
+          HomeState(
+            product: product,
+          ),
+        );
 
   final ProductRepository _productRepository;
   final status = HomeStatus;
@@ -26,6 +31,24 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           status: HomeStatus.success,
           products: newProducts,
+        ),
+      );
+    } catch (error) {
+      state.copyWith(status: HomeStatus.failure);
+    }
+  }
+
+  Future<void> editProduct() async {
+    emit(
+      state.copyWith(status: HomeStatus.attempting),
+    );
+
+    try {
+      await _productRepository.saveOrCreateProduct(state.product);
+
+      emit(
+        state.copyWith(
+          status: HomeStatus.success,
         ),
       );
     } catch (error) {

@@ -41,6 +41,7 @@ class ProductClient {
   /// A method to save changes or create a new Product
   Future<void> saveOrCreateProduct(Product? product) async {
     if (product?.id == null) {
+      await createProduct(product);
     } else {
       await updateProduct(product);
     }
@@ -52,6 +53,25 @@ class ProductClient {
     await _client.put(url, body: product?.toJson());
 
     return product?.id;
+  }
+
+  /// A method to create a Product
+  Future<String?> createProduct(Product? product) async {
+    final url = Uri.https(_baseUrl, 'products.json');
+    final resp = await _client.post(url, body: product?.toJson());
+    // final decodedData = json.decode(resp.body);
+
+    // product?.id = decodedData['name'].toString();
+
+    final body = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
+
+    try {
+      return product?.id = body['name'].toString();
+    } catch (e) {
+      throw const SpecifiedTypeNotMatchedException();
+    }
+
+    // return product?.id!;
   }
 }
 

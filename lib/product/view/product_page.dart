@@ -5,6 +5,7 @@ import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 import 'package:ui/ui.dart';
@@ -58,10 +59,11 @@ class ProductView extends StatelessWidget {
         floatingActionButton: Padding(
           padding: EdgeInsets.all(10.sp),
           child: FloatingActionButton(
-            onPressed: () async {
+            onPressed: () {
               final isValidForm = cubit.state.formKey.currentState?.validate();
               if (!(isValidForm ?? false)) return;
-              await cubit.editProduct();
+              cubit.editProduct();
+              context.pop(true);
             },
             child: const Icon(
               Icons.save_outlined,

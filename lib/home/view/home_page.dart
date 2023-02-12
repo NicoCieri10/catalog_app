@@ -3,7 +3,7 @@ import 'package:catalog_app/home/widgets/widgets.dart';
 import 'package:catalog_app/loading/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
@@ -15,8 +15,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(
+      create: (context) => HomeCubit(
         productRepository: context.read<ProductRepository>(),
+        product: Product(available: false, name: 'New Product', price: 0.00),
       ),
       child: const HomeView(),
     );
@@ -28,7 +29,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeCubit = BlocProvider.of<HomeCubit>(context)..loadProducts();
+    final cubit = context.read<HomeCubit>()..loadProducts();
 
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
@@ -43,19 +44,22 @@ class HomeView extends StatelessWidget {
           ),
           body: RefreshIndicator(
             color: Colors.blue[800],
-            onRefresh: homeCubit.loadProducts,
+            onRefresh: cubit.loadProducts,
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               itemCount: state.products.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () {
-                    context.pushNamed(
-                      'product',
+                  onTap: () async {
+                    final result = await context.push<bool>(
+                      '/product',
                       extra: <String, Product>{
                         'product': products[index].copy(),
                       },
                     );
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (result ?? false) cubit.loadProducts;
+                    });
                   },
                   child: ProductCard(product: products[index]),
                 );
@@ -64,7 +68,14 @@ class HomeView extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(
+                'product',
+                extra: <String, Product>{
+                  'product': state.product.copy(),
+                },
+              );
+            },
           ),
         );
       },

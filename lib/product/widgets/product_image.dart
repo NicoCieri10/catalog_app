@@ -27,13 +27,13 @@ class ProductImage extends StatelessWidget {
         height: 380.sp,
         child: ClipRRect(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(45.sp),
-            topRight: Radius.circular(45.sp),
+            topLeft: Radius.circular(25.sp),
+            topRight: Radius.circular(25.sp),
           ),
           child: product?.picture == null
               ? const Image(
                   image: AssetImage('assets/no-image.png'),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 )
               : FadeInImage(
                   image: NetworkImage(

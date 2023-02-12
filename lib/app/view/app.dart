@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
 
