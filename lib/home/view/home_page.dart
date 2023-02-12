@@ -1,3 +1,4 @@
+import 'package:appsize/appsize.dart';
 import 'package:catalog_app/home/cubit/home_cubit.dart';
 import 'package:catalog_app/home/widgets/widgets.dart';
 import 'package:catalog_app/loading/loading.dart';
@@ -31,8 +32,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<HomeCubit>()..loadProducts();
 
-    return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {},
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         if (state.status == HomeStatus.attempting) return const LoadingPage();
 
@@ -51,14 +51,14 @@ class HomeView extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () async {
-                    final result = await context.push<bool>(
-                      '/product',
+                    final result = await context.pushNamed<bool>(
+                      'product',
                       extra: <String, Product>{
                         'product': products[index].copy(),
                       },
                     );
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (result ?? false) cubit.loadProducts;
+                      if (result ?? false) cubit.loadProducts();
                     });
                   },
                   child: ProductCard(product: products[index]),
@@ -66,16 +66,22 @@ class HomeView extends StatelessWidget {
               },
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              context.pushNamed(
-                'product',
-                extra: <String, Product>{
-                  'product': state.product.copy(),
-                },
-              );
-            },
+          floatingActionButton: Padding(
+            padding: EdgeInsets.all(10.sp),
+            child: FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () async {
+                final result = await context.pushNamed<bool>(
+                  'product',
+                  extra: <String, Product>{
+                    'product': state.product.copy(),
+                  },
+                );
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (result ?? false) cubit.loadProducts();
+                });
+              },
+            ),
           ),
         );
       },
