@@ -21,4 +21,9 @@ class ProductRepository {
   Future<void> saveOrCreateProduct(Product? product) async {
     return _client.saveOrCreateProduct(product);
   }
+
+  /// Method to update the image of a product.
+  void updateProductImage(String path) {
+    return _client.updateProductImage(path);
+  }
 }

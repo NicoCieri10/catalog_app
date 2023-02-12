@@ -38,6 +38,24 @@ class ProductCubit extends Cubit<ProductState> {
     );
   }
 
+  void updateProductImage(String path) {
+    emit(
+      state.copyWith(status: ProductStatus.attempting),
+    );
+    try {
+      _productRepository.updateProductImage(path);
+
+      emit(
+        state.copyWith(
+          status: ProductStatus.success,
+          image: path,
+        ),
+      );
+    } catch (error) {
+      state.copyWith(status: ProductStatus.failure);
+    }
+  }
+
   Future<void> editProduct() async {
     emit(
       state.copyWith(status: ProductStatus.attempting),

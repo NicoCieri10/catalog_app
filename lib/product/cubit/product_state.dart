@@ -12,20 +12,24 @@ class ProductState extends Equatable {
     this.status = ProductStatus.initial,
     required this.product,
     required this.formKey,
+    this.image = '',
   });
 
   final ProductStatus status;
   final Product product;
   final GlobalKey<FormState> formKey;
+  final String image;
 
   ProductState copyWith({
     ProductStatus? status,
     Product? product,
+    String? image,
   }) {
     return ProductState(
       status: status ?? this.status,
       product: product ?? this.product,
       formKey: formKey,
+      image: image ?? this.image,
     );
   }
 
@@ -34,5 +38,6 @@ class ProductState extends Equatable {
         status,
         product,
         formKey,
+        image,
       ];
 }

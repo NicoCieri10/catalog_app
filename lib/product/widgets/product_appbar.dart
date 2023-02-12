@@ -13,6 +13,7 @@ class ProductAppBar extends StatelessWidget with PreferredSizeWidget {
     final product = context.select<ProductCubit, Product?>(
       (value) => value.state.product,
     );
+    final cubit = context.read<ProductCubit>();
 
     return AppBar(
       title: Text(product?.name ?? 'Producto'),
@@ -26,10 +27,10 @@ class ProductAppBar extends StatelessWidget with PreferredSizeWidget {
               imageQuality: 100,
             );
             if (pickedFile == null) {
-              print('No image selected');
               return;
             }
-            print('Image: ${pickedFile.path}');
+            cubit.updateProductImage(pickedFile.path);
+            // print('Image: ${pickedFile.path}');
           },
           icon: Icon(
             Icons.camera_alt_outlined,

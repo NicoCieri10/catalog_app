@@ -38,7 +38,7 @@ class ProductClient {
     }
   }
 
-  /// A method to save changes or create a new Product
+  /// A method to save changes or create a new Product.
   Future<void> saveOrCreateProduct(Product? product) async {
     if (product?.id == null) {
       await createProduct(product);
@@ -47,7 +47,7 @@ class ProductClient {
     }
   }
 
-  /// A method to update a Product
+  /// A method to update a Product.
   Future<String?> updateProduct(Product? product) async {
     final url = Uri.https(_baseUrl, 'products/${product?.id}.json');
     await _client.put(url, body: product?.toJson());
@@ -55,13 +55,10 @@ class ProductClient {
     return product?.id;
   }
 
-  /// A method to create a Product
+  /// A method to create a Product.
   Future<String?> createProduct(Product? product) async {
     final url = Uri.https(_baseUrl, 'products.json');
     final resp = await _client.post(url, body: product?.toJson());
-    // final decodedData = json.decode(resp.body);
-
-    // product?.id = decodedData['name'].toString();
 
     final body = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
 
@@ -70,9 +67,10 @@ class ProductClient {
     } catch (e) {
       throw const SpecifiedTypeNotMatchedException();
     }
-
-    // return product?.id!;
   }
+
+  /// A method to update the Image of the Product.
+  void updateProductImage(String path) {}
 }
 
 /// {@template specified_type_not_matched_exception}
