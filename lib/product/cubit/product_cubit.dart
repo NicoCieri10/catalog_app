@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -43,16 +45,37 @@ class ProductCubit extends Cubit<ProductState> {
       state.copyWith(status: ProductStatus.attempting),
     );
     try {
-      _productRepository.updateProductImage(path);
-
       emit(
         state.copyWith(
           status: ProductStatus.success,
-          image: path,
+          newImage: File.fromUri(
+            Uri(path: path),
+          ),
+          product: state.product.copyWith(picture: path),
         ),
       );
     } catch (error) {
       state.copyWith(status: ProductStatus.failure);
+    }
+  }
+
+  Future<String?> uploadImage() async {
+    emit(
+      state.copyWith(status: ProductStatus.attempting),
+    );
+    try {
+      final imageUrl = await _productRepository
+          .updateProductImage(state.product.picture ?? '');
+
+      emit(
+        state.copyWith(
+          status: ProductStatus.success,
+        ),
+      );
+      return imageUrl;
+    } catch (error) {
+      state.copyWith(status: ProductStatus.failure);
+      return null;
     }
   }
 

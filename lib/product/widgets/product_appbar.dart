@@ -30,7 +30,6 @@ class ProductAppBar extends StatelessWidget with PreferredSizeWidget {
               return;
             }
             cubit.updateProductImage(pickedFile.path);
-            // print('Image: ${pickedFile.path}');
           },
           icon: Icon(
             Icons.camera_alt_outlined,

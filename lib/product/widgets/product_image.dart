@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appsize/appsize.dart';
 import 'package:catalog_app/product/cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
@@ -30,18 +32,7 @@ class ProductImage extends StatelessWidget {
             topLeft: Radius.circular(25.sp),
             topRight: Radius.circular(25.sp),
           ),
-          child: product?.picture == null
-              ? const Image(
-                  image: AssetImage('assets/no-image.png'),
-                  fit: BoxFit.cover,
-                )
-              : FadeInImage(
-                  image: NetworkImage(
-                    product!.picture!,
-                  ),
-                  placeholder: const AssetImage('assets/jar-loading.gif'),
-                  fit: BoxFit.contain,
-                ),
+          child: DisplayImage(product: product),
         ),
       ),
     );
@@ -61,4 +52,38 @@ class ProductImage extends StatelessWidget {
           ),
         ],
       );
+}
+
+class DisplayImage extends StatelessWidget {
+  const DisplayImage({
+    super.key,
+    required this.product,
+  });
+
+  final Product? product;
+
+  @override
+  Widget build(BuildContext context) {
+    if (product?.picture == null) {
+      return const Image(
+        image: AssetImage('assets/no-image.png'),
+        fit: BoxFit.cover,
+      );
+    }
+
+    if (product!.picture!.startsWith('http')) {
+      return FadeInImage(
+        image: NetworkImage(
+          product!.picture!,
+        ),
+        placeholder: const AssetImage('assets/jar-loading.gif'),
+        fit: BoxFit.contain,
+      );
+    }
+
+    return Image.file(
+      File(product!.picture!),
+      fit: BoxFit.cover,
+    );
+  }
 }

@@ -41,35 +41,45 @@ class ProductView extends StatelessWidget {
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: Scaffold(
-        appBar: const ProductAppBar(),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.all(10.sp),
-            child: Column(
-              children: [
-                const ProductImage(),
-                const ProductForm(),
-                SizedBox(height: 100.sp),
-              ],
+      child: BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: const ProductAppBar(),
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.all(10.sp),
+                child: Column(
+                  children: [
+                    const ProductImage(),
+                    const ProductForm(),
+                    SizedBox(height: 100.sp),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-        floatingActionButton: Padding(
-          padding: EdgeInsets.all(10.sp),
-          child: FloatingActionButton(
-            onPressed: () {
-              final isValidForm = cubit.state.formKey.currentState?.validate();
-              if (!(isValidForm ?? false)) return;
-              cubit.editProduct();
-              context.pop(true);
-            },
-            child: const Icon(
-              Icons.save_outlined,
+            floatingActionButton: Padding(
+              padding: EdgeInsets.all(10.sp),
+              child: FloatingActionButton(
+                onPressed: () {
+                  final isValidForm =
+                      cubit.state.formKey.currentState?.validate();
+
+                  if (!(isValidForm ?? false)) return;
+
+                  cubit.editProduct();
+
+                  final imageUrl = cubit.uploadImage();
+                  // ToDo: guardar la imagen de Cloudinary
+                  context.pop(true);
+                },
+                child: const Icon(
+                  Icons.save_outlined,
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

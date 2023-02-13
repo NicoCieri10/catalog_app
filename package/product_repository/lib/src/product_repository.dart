@@ -23,7 +23,7 @@ class ProductRepository {
   }
 
   /// Method to update the image of a product.
-  void updateProductImage(String path) {
+  Future<String?>? updateProductImage(String path) {
     return _client.updateProductImage(path);
   }
 }

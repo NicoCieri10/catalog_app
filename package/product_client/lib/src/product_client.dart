@@ -69,8 +69,22 @@ class ProductClient {
     }
   }
 
-  /// A method to update the Image of the Product.
-  void updateProductImage(String path) {}
+  /// A method to upload the Image of the Product to the DataBase.
+  Future<String?> updateProductImage(String path) async {
+    final url = Uri.parse(
+      'https://api.cloudinary.com/v1_1/dktthsxm2/image/upload?upload_preset=mk00jfhc',
+    );
+    final imageUploadRequest = http.MultipartRequest('POST', url);
+    final file = await http.MultipartFile.fromPath('file', path);
+
+    imageUploadRequest.files.add(file);
+
+    final streamResponse = await imageUploadRequest.send();
+    final resp = await http.Response.fromStream(streamResponse);
+    final decodedData = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
+
+    return decodedData['secure_url'].toString();
+  }
 }
 
 /// {@template specified_type_not_matched_exception}
