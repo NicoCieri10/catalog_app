@@ -65,13 +65,17 @@ class ProductCubit extends Cubit<ProductState> {
     );
     try {
       final imageUrl = await _productRepository
-          .updateProductImage(state.product.picture ?? '');
+          .uploadProductImage(state.product.picture ?? '');
 
       emit(
         state.copyWith(
           status: ProductStatus.success,
+          product: state.product.copyWith(picture: imageUrl),
         ),
       );
+
+      // await editProduct();
+
       return imageUrl;
     } catch (error) {
       state.copyWith(status: ProductStatus.failure);

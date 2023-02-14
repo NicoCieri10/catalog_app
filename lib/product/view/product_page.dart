@@ -69,7 +69,9 @@ class ProductView extends StatelessWidget {
 
                   cubit.editProduct();
 
-                  final imageUrl = cubit.uploadImage();
+                  if (state.status == ProductStatus.success) {
+                    final imageUrl = cubit.uploadImage();
+                  }
                   // ToDo: guardar la imagen de Cloudinary
                   context.pop(true);
                 },

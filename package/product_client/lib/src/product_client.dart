@@ -70,7 +70,7 @@ class ProductClient {
   }
 
   /// A method to upload the Image of the Product to the DataBase.
-  Future<String?> updateProductImage(String path) async {
+  Future<String?> uploadProductImage(String path) async {
     final url = Uri.parse(
       'https://api.cloudinary.com/v1_1/dktthsxm2/image/upload?upload_preset=mk00jfhc',
     );
