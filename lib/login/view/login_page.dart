@@ -43,7 +43,7 @@ class LoginView extends StatelessWidget {
                       SizedBox(height: 10.sp),
                       Text(
                         'Login',
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       SizedBox(height: 30.sp),
                       const _LoginForm(),

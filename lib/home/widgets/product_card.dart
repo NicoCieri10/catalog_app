@@ -199,7 +199,7 @@ class _BackgroundImage extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 400.sp,
-        // ToDo: ver qué onda con esto
+        // TODO(NicoCieri10): ver qué onda con esto
         child: DisplayImage(product: product),
       ),
     );

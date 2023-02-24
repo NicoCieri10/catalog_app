@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:product_client/src/models/models.dart';
 
 /// {@template product_client}
-/// The Client used to make requests to the Product Database.
+/// The Client used to make requests to the [Product] Database.
 /// {@endtemplate}
 class ProductClient {
   /// {@macro product_client}
@@ -38,7 +38,7 @@ class ProductClient {
     }
   }
 
-  /// A method to save changes or create a new Product.
+  /// A method to save changes or create a new [Product].
   Future<void> saveOrCreateProduct(Product? product) async {
     if (product?.id == null) {
       await createProduct(product);
@@ -47,29 +47,7 @@ class ProductClient {
     }
   }
 
-  /// A method to update a Product.
-  Future<String?> updateProduct(Product? product) async {
-    final url = Uri.https(_baseUrl, 'products/${product?.id}.json');
-    await _client.put(url, body: product?.toJson());
-
-    return product?.id;
-  }
-
-  /// A method to create a Product.
-  Future<String?> createProduct(Product? product) async {
-    final url = Uri.https(_baseUrl, 'products.json');
-    final resp = await _client.post(url, body: product?.toJson());
-
-    final body = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
-
-    try {
-      return product?.id = body['name'].toString();
-    } catch (e) {
-      throw const SpecifiedTypeNotMatchedException();
-    }
-  }
-
-  /// A method to upload the Image of the Product to the DataBase.
+  /// A method to upload the Image of the [Product] to the DataBase.
   Future<String?> uploadProductImage(String path) async {
     final url = Uri.parse(
       'https://api.cloudinary.com/v1_1/dktthsxm2/image/upload?upload_preset=mk00jfhc',
@@ -84,6 +62,28 @@ class ProductClient {
     final decodedData = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
 
     return decodedData['secure_url'].toString();
+  }
+
+  /// A method to update a [Product].
+  Future<String?> updateProduct(Product? product) async {
+    final url = Uri.https(_baseUrl, 'products/${product?.id}.json');
+    await _client.put(url, body: product?.toJson());
+
+    return product?.id;
+  }
+
+  /// A method to create a [Product].
+  Future<String?> createProduct(Product? product) async {
+    final url = Uri.https(_baseUrl, 'products.json');
+    final resp = await _client.post(url, body: product?.toJson());
+
+    final body = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
+
+    try {
+      return product?.id = body['name'].toString();
+    } catch (e) {
+      throw const SpecifiedTypeNotMatchedException();
+    }
   }
 }
 

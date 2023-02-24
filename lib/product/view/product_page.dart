@@ -32,9 +32,14 @@ class ProductPage extends StatelessWidget {
   }
 }
 
-class ProductView extends StatelessWidget {
+class ProductView extends StatefulWidget {
   const ProductView({super.key});
 
+  @override
+  State<ProductView> createState() => _ProductViewState();
+}
+
+class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ProductCubit>();
@@ -61,18 +66,16 @@ class ProductView extends StatelessWidget {
             floatingActionButton: Padding(
               padding: EdgeInsets.all(10.sp),
               child: FloatingActionButton(
-                onPressed: () {
+                onPressed: () async {
                   final isValidForm =
                       cubit.state.formKey.currentState?.validate();
 
                   if (!(isValidForm ?? false)) return;
 
-                  cubit.editProduct();
+                  await cubit.uploadProductImage();
+                  await cubit.editProduct();
 
-                  if (state.status == ProductStatus.success) {
-                    final imageUrl = cubit.uploadImage();
-                  }
-                  // ToDo: guardar la imagen de Cloudinary
+                  if (!mounted) return;
                   context.pop(true);
                 },
                 child: const Icon(

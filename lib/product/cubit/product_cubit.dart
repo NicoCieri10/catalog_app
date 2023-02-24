@@ -59,7 +59,7 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 
-  Future<String?> uploadImage() async {
+  Future<void> uploadProductImage() async {
     emit(
       state.copyWith(status: ProductStatus.attempting),
     );
@@ -73,13 +73,8 @@ class ProductCubit extends Cubit<ProductState> {
           product: state.product.copyWith(picture: imageUrl),
         ),
       );
-
-      // await editProduct();
-
-      return imageUrl;
     } catch (error) {
       state.copyWith(status: ProductStatus.failure);
-      return null;
     }
   }
 
