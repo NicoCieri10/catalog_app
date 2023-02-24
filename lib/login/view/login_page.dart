@@ -51,12 +51,15 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 50.sp),
-                Text(
-                  style: TextStyle(
-                    color: myThemeLight.primaryColor,
-                    fontWeight: FontWeight.w500,
+                GestureDetector(
+                  child: Text(
+                    style: TextStyle(
+                      color: myThemeLight.primaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    'Crear una nueva cuenta',
                   ),
-                  'Crear una nueva cuenta',
+                  onTap: () => context.pushNamed('register'),
                 ),
                 SizedBox(height: 50.sp),
               ],

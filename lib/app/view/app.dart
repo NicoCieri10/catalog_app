@@ -3,6 +3,7 @@ import 'package:catalog_app/home/home.dart';
 import 'package:catalog_app/l10n/l10n.dart';
 import 'package:catalog_app/login/login.dart';
 import 'package:catalog_app/product/product.dart';
+import 'package:catalog_app/register/register.dart';
 import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class App extends StatelessWidget {
       SystemUiOverlayStyle.light.copyWith(
         systemNavigationBarColor: myThemeLight.primaryColor,
         systemNavigationBarIconBrightness: Brightness.light,
-        statusBarColor: myThemeLight.primaryColor,
+        statusBarColor: Colors.transparent,
       ),
     );
 
@@ -60,13 +61,18 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
-        name: 'home',
-        builder: (context, state) => const HomePage(),
-      ),
-      GoRoute(
-        path: '/login',
         name: 'login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/home',
+        name: 'home',
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: '/product',
