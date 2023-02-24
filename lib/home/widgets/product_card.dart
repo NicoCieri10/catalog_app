@@ -197,7 +197,7 @@ class _BackgroundImage extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 400.sp,
-        child: product.picture == null
+        child: product.picture == '' || product.picture == null
             ? const Image(
                 image: AssetImage('assets/no-image.png'),
                 fit: BoxFit.cover,

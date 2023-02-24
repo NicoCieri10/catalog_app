@@ -66,21 +66,23 @@ class _ProductViewState extends State<ProductView> {
             floatingActionButton: Padding(
               padding: EdgeInsets.all(10.sp),
               child: FloatingActionButton(
-                onPressed: () async {
-                  final isValidForm =
-                      cubit.state.formKey.currentState?.validate();
+                onPressed: state.status == ProductStatus.attempting
+                    ? null
+                    : () async {
+                        final isValidForm =
+                            cubit.state.formKey.currentState?.validate();
 
-                  if (!(isValidForm ?? false)) return;
+                        if (!(isValidForm ?? false)) return;
 
-                  await cubit.uploadProductImage();
-                  await cubit.editProduct();
+                        await cubit.uploadProductImage();
+                        await cubit.editProduct();
 
-                  if (!mounted) return;
-                  context.pop(true);
-                },
-                child: const Icon(
-                  Icons.save_outlined,
-                ),
+                        if (!mounted) return;
+                        context.pop(true);
+                      },
+                child: state.status == ProductStatus.attempting
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Icon(Icons.save_outlined),
               ),
             ),
           );

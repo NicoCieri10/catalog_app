@@ -64,7 +64,7 @@ class DisplayImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (product?.picture == null) {
+    if (product?.picture == '' || product?.picture == null) {
       return const Image(
         image: AssetImage('assets/no-image.png'),
         fit: BoxFit.cover,
