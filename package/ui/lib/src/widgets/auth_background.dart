@@ -1,9 +1,12 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 
+/// A class for the Authentication Background
 class AuthBackground extends StatelessWidget {
+  /// Authentication Background constructor
   const AuthBackground({super.key, required this.child});
 
+  /// The child of the Stack
   final Widget child;
 
   @override

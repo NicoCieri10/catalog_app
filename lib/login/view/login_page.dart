@@ -1,7 +1,6 @@
 import 'package:appsize/appsize.dart';
 import 'package:catalog_app/home/home.dart';
 import 'package:catalog_app/login/cubit/login_cubit.dart';
-import 'package:catalog_app/login/widgets/widgets.dart';
 import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

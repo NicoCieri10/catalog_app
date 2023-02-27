@@ -1,9 +1,12 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 
+/// A class to create a Card Container
 class CardContainer extends StatelessWidget {
+  /// The constructor of the Card Container
   const CardContainer({super.key, required this.child});
 
+  /// The child of the Card Container
   final Widget child;
 
   @override
