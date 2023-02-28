@@ -5,6 +5,7 @@ import 'package:catalog_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router_flow/go_router_flow.dart';
+import 'package:product_repository/product_repository.dart';
 import 'package:ui/ui.dart';
 
 class LoginPage extends StatelessWidget {
@@ -15,7 +16,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => LoginCubit(
+        productRepository: context.read<ProductRepository>(),
+      ),
       child: const LoginView(),
     );
   }
@@ -70,9 +73,14 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _LoginForm extends StatefulWidget {
   const _LoginForm();
 
+  @override
+  State<_LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<_LoginForm> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LoginCubit>();
@@ -134,22 +142,21 @@ class _LoginForm extends StatelessWidget {
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();
+
                         final isValidForm =
                             cubit.state.formKey.currentState?.validate();
 
                         if (!(isValidForm ?? false)) return;
-                        // nico@gmail.com
 
-                        cubit.changeState(LoginStatus.attempting);
+                        final resp = await cubit.login();
 
-                        await Future<void>.delayed(
-                          const Duration(seconds: 2),
-                        );
-
-                        cubit.changeState(LoginStatus.success);
-
-                        // ignore: use_build_context_synchronously
-                        context.goNamed(HomePage.name);
+                        if (resp == true) {
+                          if (!mounted) return;
+                          context.goNamed(HomePage.name);
+                        } else {
+                          // Mostrar error en pantalla
+                          print('Usuario o contraseña incorrectos');
+                        }
                       },
                 child: const ButtonText(),
               ),

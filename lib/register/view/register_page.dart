@@ -4,6 +4,7 @@ import 'package:catalog_app/register/cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router_flow/go_router_flow.dart';
+import 'package:product_repository/product_repository.dart';
 import 'package:ui/ui.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -14,7 +15,9 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterCubit(),
+      create: (context) => RegisterCubit(
+        productRepository: context.read<ProductRepository>(),
+      ),
       child: const RegisterView(),
     );
   }
@@ -58,9 +61,14 @@ class RegisterView extends StatelessWidget {
   }
 }
 
-class _RegisterForm extends StatelessWidget {
+class _RegisterForm extends StatefulWidget {
   const _RegisterForm();
 
+  @override
+  State<_RegisterForm> createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<_RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<RegisterCubit>();
@@ -122,22 +130,20 @@ class _RegisterForm extends StatelessWidget {
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();
+
                         final isValidForm =
                             cubit.state.formKey.currentState?.validate();
 
                         if (!(isValidForm ?? false)) return;
-                        // nico@gmail.com
 
-                        cubit.changeState(RegisterStatus.attempting);
+                        final resp = await cubit.createUser();
 
-                        await Future<void>.delayed(
-                          const Duration(seconds: 2),
-                        );
-
-                        cubit.changeState(RegisterStatus.success);
-
-                        // ignore: use_build_context_synchronously
-                        context.goNamed(HomePage.name);
+                        if (resp == true) {
+                          if (!mounted) return;
+                          context.pop();
+                        } else {
+                          // Mostrar error en pantalla
+                        }
                       },
                 child: const ButtonText(),
               ),

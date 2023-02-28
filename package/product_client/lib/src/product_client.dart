@@ -17,6 +17,10 @@ class ProductClient {
   static const _baseUrl =
       'flutter-catalog-app-9a394-default-rtdb.firebaseio.com';
 
+  static const _baseAuthUrl = 'identitytoolkit.googleapis.com';
+
+  static const _firebaseToken = 'AIzaSyDiutNqrURTB8Y-_loerpC35feM2rPQ6PI';
+
   /// A method to make the request to the Database.
   Future<List<Product>> loadProducts() async {
     final url = Uri.https(_baseUrl, 'products.json');
@@ -81,6 +85,58 @@ class ProductClient {
 
     try {
       return product?.id = body['name'].toString();
+    } catch (e) {
+      throw const SpecifiedTypeNotMatchedException();
+    }
+  }
+
+  /// A method to create a User.
+  Future<String?>? createUser(String email, String password) async {
+    final authData = <String, dynamic>{'email': email, 'password': password};
+
+    final url = Uri.https(
+      _baseAuthUrl,
+      '/v1/accounts:signUp',
+      {'key': _firebaseToken},
+    );
+
+    final resp = await http.post(url, body: jsonEncode(authData));
+
+    final decodedResp = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
+
+    try {
+      if (decodedResp.containsKey('idToken')) {
+        // decodedResp['idToken'] as String;
+        return null;
+      } else {
+        return decodedResp['message'] as String;
+      }
+    } catch (e) {
+      throw const SpecifiedTypeNotMatchedException();
+    }
+  }
+
+  /// A method to login.
+  Future<String?>? login(String email, String password) async {
+    final authData = <String, dynamic>{'email': email, 'password': password};
+
+    final url = Uri.https(
+      _baseAuthUrl,
+      '/v1/accounts:signInWithPassword',
+      {'key': _firebaseToken},
+    );
+
+    final resp = await http.post(url, body: jsonEncode(authData));
+
+    final decodedResp = (jsonDecode(resp.body) as Map).cast<String, dynamic>();
+
+    try {
+      if (decodedResp.containsKey('idToken')) {
+        // decodedResp['idToken'] as String;
+        return null;
+      } else {
+        return decodedResp['message'] as String;
+      }
     } catch (e) {
       throw const SpecifiedTypeNotMatchedException();
     }

@@ -26,4 +26,14 @@ class ProductRepository {
   Future<String?>? uploadProductImage(String path) {
     return _client.uploadProductImage(path);
   }
+
+  /// Method to create a User.
+  Future<String?> createUser(String email, String password) async {
+    return _client.createUser(email, password);
+  }
+
+  /// Method to login.
+  Future<String?> login(String email, String password) async {
+    return _client.login(email, password);
+  }
 }
