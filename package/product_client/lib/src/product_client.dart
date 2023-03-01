@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:product_client/src/models/models.dart';
 
@@ -11,7 +12,9 @@ class ProductClient {
     loadProducts();
   }
 
-  /// The client used to make requests.
+  /// The secure storage
+  static const storage = FlutterSecureStorage();
+
   final _client = http.Client();
 
   static const _baseUrl =
@@ -106,7 +109,10 @@ class ProductClient {
 
     try {
       if (decodedResp.containsKey('idToken')) {
-        // decodedResp['idToken'] as String;
+        await storage.write(
+          key: 'token',
+          value: decodedResp['idToken'] as String,
+        );
         return null;
       } else {
         return decodedResp['message'] as String;
@@ -132,7 +138,10 @@ class ProductClient {
 
     try {
       if (decodedResp.containsKey('idToken')) {
-        // decodedResp['idToken'] as String;
+        await storage.write(
+          key: 'token',
+          value: decodedResp['idToken'] as String,
+        );
         return null;
       } else {
         return decodedResp['message'] as String;
@@ -140,6 +149,18 @@ class ProductClient {
     } catch (e) {
       throw const SpecifiedTypeNotMatchedException();
     }
+  }
+
+  /// A method to logout
+  Future<void> logout() async {
+    await storage.delete(key: 'token');
+
+    return;
+  }
+
+  /// A method to read the token
+  Future<String> readToken() async {
+    return await storage.read(key: 'token') ?? '';
   }
 }
 

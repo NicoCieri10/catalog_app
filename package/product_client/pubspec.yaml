@@ -13,4 +13,5 @@ dev_dependencies:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
   http: ^0.13.5
