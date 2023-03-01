@@ -36,4 +36,14 @@ class ProductRepository {
   Future<String?> login(String email, String password) async {
     return _client.login(email, password);
   }
+
+  /// Method to logout
+  Future<void> logout() async {
+    return _client.logout();
+  }
+
+  /// Method to read the token
+  Future<String> readToken() async {
+    return _client.readToken();
+  }
 }
