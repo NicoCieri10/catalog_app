@@ -16,6 +16,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
   go_router_flow: ^6.0.0+3
   http: ^0.13.5
   image_picker: ^0.8.6+1

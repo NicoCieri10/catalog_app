@@ -1,5 +1,4 @@
 import 'package:appsize/appsize.dart';
-import 'package:catalog_app/home/home.dart';
 import 'package:catalog_app/register/cubit/register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
