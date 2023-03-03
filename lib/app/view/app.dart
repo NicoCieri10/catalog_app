@@ -1,4 +1,5 @@
 import 'package:appsize/appsize.dart';
+import 'package:catalog_app/check_auth/cheack_auth.dart';
 import 'package:catalog_app/home/home.dart';
 import 'package:catalog_app/l10n/l10n.dart';
 import 'package:catalog_app/login/login.dart';
@@ -61,6 +62,11 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
+        name: 'auth',
+        builder: (context, state) => const CheckAuthPage(),
+      ),
+      GoRoute(
+        path: '/login',
         name: 'login',
         builder: (context, state) => const LoginPage(),
       ),
