@@ -56,6 +56,24 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  void logout() {
+    emit(
+      state.copyWith(status: HomeStatus.attempting),
+    );
+
+    try {
+      _productRepository.logout();
+
+      emit(
+        state.copyWith(
+          status: HomeStatus.success,
+        ),
+      );
+    } catch (error) {
+      state.copyWith(status: HomeStatus.failure);
+    }
+  }
+
   void changeState(HomeStatus status) {
     emit(
       state.copyWith(

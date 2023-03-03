@@ -41,6 +41,15 @@ class HomeView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Productos'),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  cubit.logout();
+                  context.pushReplacementNamed('login');
+                },
+                icon: const Icon(Icons.login_outlined),
+              ),
+            ],
           ),
           body: RefreshIndicator(
             color: Colors.blue[800],
