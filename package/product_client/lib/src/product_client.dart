@@ -111,11 +111,11 @@ class ProductClient {
       if (decodedResp.containsKey('idToken')) {
         await storage.write(
           key: 'token',
-          value: decodedResp['idToken'] as String,
+          value: decodedResp['idToken'].toString(),
         );
         return null;
       } else {
-        return decodedResp['message'] as String;
+        return decodedResp['message'].toString();
       }
     } catch (e) {
       throw const SpecifiedTypeNotMatchedException();
@@ -140,11 +140,12 @@ class ProductClient {
       if (decodedResp.containsKey('idToken')) {
         await storage.write(
           key: 'token',
-          value: decodedResp['idToken'] as String,
+          value: decodedResp['idToken'].toString(),
         );
         return null;
       } else {
-        return decodedResp['message'] as String;
+        return (decodedResp['error'] as Map<String, dynamic>)['message']
+            .toString();
       }
     } catch (e) {
       throw const SpecifiedTypeNotMatchedException();

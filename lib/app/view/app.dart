@@ -13,6 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router_flow/go_router_flow.dart';
 import 'package:product_client/product_client.dart';
 import 'package:product_repository/product_repository.dart';
+import 'package:ui/ui.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
+      scaffoldMessengerKey: Notifications.messengerKey,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

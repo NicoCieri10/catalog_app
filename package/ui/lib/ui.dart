@@ -2,5 +2,6 @@
 library ui;
 
 export 'src/common/input_decorations.dart';
+export 'src/helpers/notifications.dart';
 export 'src/ui.dart';
 export 'src/widgets/widgets.dart';

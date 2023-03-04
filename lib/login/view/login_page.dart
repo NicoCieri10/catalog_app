@@ -148,14 +148,13 @@ class _LoginFormState extends State<_LoginForm> {
 
                         if (!(isValidForm ?? false)) return;
 
-                        final resp = await cubit.login();
+                        final errorMessage = await cubit.login();
 
-                        if (resp == true) {
+                        if (errorMessage == null) {
                           if (!mounted) return;
                           context.goNamed(HomePage.name);
                         } else {
-                          // Mostrar error en pantalla
-                          print('Usuario o contraseña incorrectos');
+                          Notifications.showSnackbar(errorMessage);
                         }
                       },
                 child: const ButtonText(),

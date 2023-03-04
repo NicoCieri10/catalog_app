@@ -40,7 +40,7 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-  Future<bool> login() async {
+  Future<String?> login() async {
     emit(
       state.copyWith(status: LoginStatus.attempting),
     );
@@ -53,19 +53,19 @@ class LoginCubit extends Cubit<LoginState> {
         emit(
           state.copyWith(status: LoginStatus.success),
         );
-        return true;
+        return errorMessage;
       } else {
         emit(
           state.copyWith(status: LoginStatus.failure),
         );
-        return false;
+        return errorMessage;
       }
     } catch (error) {
       emit(
         state.copyWith(status: LoginStatus.failure),
       );
 
-      return false;
+      return 'error';
     }
   }
 
